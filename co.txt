@@ -1,0 +1,4 @@
+OLD vs NEW ... dodělat test po tech prumernych kategoriich
+
+
+bparser preVCL commit key: fdd85ed
