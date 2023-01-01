@@ -1,0 +1,136 @@
+Executor;ID;Expression;Result;Repeats;BlockSize;Time;Avg. time per single execution;FLOPS
+BParser no vectorization;0;-v1;-37536;160000;64;0.0425709;4.15732;2.16486e+09
+BParser no vectorization;1;v1 + v2;94272;160000;64;0.0355772;3.47434;2.59042e+09
+BParser no vectorization;2;v1 - v2;-19200;160000;64;0.0369647;3.60983;2.49319e+09
+BParser no vectorization;3;v1 * v2;1.16817e+07;160000;64;0.0359185;3.50767;2.56581e+09
+BParser no vectorization;4;v1 / v2;124.583;160000;64;0.0433304;4.23149;2.12691e+09
+BParser no vectorization;5;v1 % v2;37536;160000;64;0.182139;17.787;5.05986e+08
+BParser no vectorization;6;(v1 == v2);0;160000;64;0.0717275;7.00463;1.28486e+09
+BParser no vectorization;7;v1 != v2;-nan;160000;64;0.0761357;7.43513;1.21047e+09
+BParser no vectorization;8;v1 < v2;-nan;160000;64;0.0763045;7.45161;1.20779e+09
+BParser no vectorization;9;v1 <= v2;-nan;160000;64;0.0671455;6.55718;1.37254e+09
+BParser no vectorization;10;v1 > v2;0;160000;64;0.090407;8.82881;1.01939e+09
+BParser no vectorization;11;v1 >= v2;0;160000;64;0.0735204;7.17973;1.25353e+09
+BParser no vectorization;12;not (v1 == v2);-nan;160000;64;0.0969937;9.47204;9.50165e+08
+BParser no vectorization;13;v1 or v2;76448;160000;64;0.0353711;3.45421;2.60551e+09
+BParser no vectorization;14;v1 and v2;29346.5;160000;64;0.0353479;3.45194;2.60723e+09
+BParser no vectorization;15;abs(v1);37536;160000;64;0.0263452;2.57277;3.49817e+09
+BParser no vectorization;16;sqrt(v1);2656.25;160000;64;0.0617002;6.02541;1.49367e+09
+BParser no vectorization;17;exp(v1);3.79223e+126;160000;64;0.22276;21.7539;4.13719e+08
+BParser no vectorization;18;log(v1);1004.56;160000;64;0.208274;20.3393;4.42494e+08
+BParser no vectorization;19;log10(v1);436.274;160000;64;0.390761;38.1603;2.35847e+08
+BParser no vectorization;20;sin(v1);1.35473;160000;64;0.433677;42.3512;2.12509e+08
+BParser no vectorization;21;sinh(v1);1.89611e+126;160000;64;0.285035;27.8354;3.23329e+08
+BParser no vectorization;22;asin(v1);nan;160000;64;0.237022;23.1467;3.88825e+08
+BParser no vectorization;23;cos(v1);1.5407;160000;64;0.442211;43.1846;2.08408e+08
+BParser no vectorization;24;cosh(v1);1.89611e+126;160000;64;0.261572;25.5441;3.52332e+08
+BParser no vectorization;25;acos(v1);nan;160000;64;0.242932;23.7238;3.79366e+08
+BParser no vectorization;26;tan(v1);57.9803;160000;64;0.880597;85.9958;1.04656e+08
+BParser no vectorization;27;tanh(v1);192;160000;64;0.119493;11.6693;7.71256e+08
+BParser no vectorization;28;atan(v1);300.518;160000;64;0.402664;39.3227;2.28875e+08
+BParser no vectorization;29;ceil(v1);37536;160000;64;0.0668118;6.52459;1.3794e+09
+BParser no vectorization;30;floor(v1);37536;160000;64;0.0666416;6.50797;1.38292e+09
+BParser no vectorization;31;isnan(v1);0;160000;64;0.0316934;3.09506;2.90786e+09
+BParser no vectorization;32;isinf(v1);0;160000;64;0.0369138;3.60486;2.49663e+09
+BParser no vectorization;33;sgn(v1);192;160000;64;0.0375886;3.67076;2.45181e+09
+BParser no vectorization;34;atan2(v1, v2);110.219;160000;64;0.80656;78.7657;1.14263e+08
+BParser no vectorization;35;v1 ** v2;inf;160000;64;0.525815;51.3491;1.75271e+08
+BParser no vectorization;36;maximum(v1, v2);56736;160000;64;0.0475311;4.64171;1.93894e+09
+BParser no vectorization;37;minimum(v1, v2);37536;160000;64;0.0377672;3.6882;2.44021e+09
+BParser no vectorization;38;v3 if v1 == v2 else v4;95136;160000;64;0.113875;11.1206;8.09311e+08
+BParser no vectorization;39;cv1 + v1 + v2 - v3;19488;160000;64;0.110189;10.7606;8.36381e+08
+BParser no vectorization;40;cs1 - v1 + v2 * v3;2.29921e+07;160000;64;0.101062;9.86935;9.11914e+08
+BParser no vectorization;41;cs1 * v1 / v2;498.332;160000;64;0.0772784;7.54672;1.19257e+09
+BParser no vectorization;42;cv1 / v1 * v2 / v3;4.2563;160000;64;0.124153;12.1244;7.42307e+08
+BParser no vectorization;43;v1 + v2 + v3 + v4;265344;160000;64;0.101585;9.9204;9.07221e+08
+BParser no vectorization;44;3 * v1 + cs1 * v2 + v3 + 2.5 * v4;653328;160000;64;0.209106;20.4205;4.40733e+08
+BParser no vectorization;0;-v1;-371328;40000;256;0.0226992;2.21672;4.06006e+09
+BParser no vectorization;1;v1 + v2;819456;40000;256;0.0334852;3.27004;2.75226e+09
+BParser no vectorization;2;v1 - v2;-76800;40000;256;0.0332204;3.24418;2.7742e+09
+BParser no vectorization;3;v1 * v2;2.54419e+08;40000;256;0.0328805;3.21099;2.80288e+09
+BParser no vectorization;4;v1 / v2;610.11;40000;256;0.0422185;4.1229;2.18293e+09
+BParser no vectorization;5;v1 % v2;371328;40000;256;0.176332;17.2199;5.22651e+08
+BParser no vectorization;6;(v1 == v2);0;40000;256;0.0652003;6.36722;1.41349e+09
+BParser no vectorization;7;v1 != v2;-nan;40000;256;0.0701464;6.85024;1.31382e+09
+BParser no vectorization;8;v1 < v2;-nan;40000;256;0.0751786;7.34166;1.22588e+09
+BParser no vectorization;9;v1 <= v2;-nan;40000;256;0.0627246;6.12545;1.46928e+09
+BParser no vectorization;10;v1 > v2;0;40000;256;0.0855288;8.35242;1.07753e+09
+BParser no vectorization;11;v1 >= v2;0;40000;256;0.0649937;6.34704;1.41798e+09
+BParser no vectorization;12;not (v1 == v2);-nan;40000;256;0.0910071;8.88741;1.01267e+09
+BParser no vectorization;13;v1 or v2;1.24522e+07;40000;256;0.0330637;3.22888;2.78734e+09
+BParser no vectorization;14;v1 and v2;288194;40000;256;0.0331232;3.23469;2.78234e+09
+BParser no vectorization;15;abs(v1);371328;40000;256;0.0232946;2.27486;3.95628e+09
+BParser no vectorization;16;sqrt(v1);16372.2;40000;256;0.0618534;6.04037;1.48997e+09
+BParser no vectorization;17;exp(v1);inf;40000;256;0.250433;24.4564;3.68002e+08
+BParser no vectorization;18;log(v1);4643.46;40000;256;0.201306;19.6588;4.5781e+08
+BParser no vectorization;19;log10(v1);2016.63;40000;256;0.375393;36.6594;2.45503e+08
+BParser no vectorization;20;sin(v1);-0.416043;40000;256;0.439483;42.9182;2.09701e+08
+BParser no vectorization;21;sinh(v1);inf;40000;256;0.315353;30.7962;2.92244e+08
+BParser no vectorization;22;asin(v1);nan;40000;256;0.230957;22.5544;3.99035e+08
+BParser no vectorization;23;cos(v1);1.32027;40000;256;0.440913;43.0579;2.09021e+08
+BParser no vectorization;24;cosh(v1);inf;40000;256;0.281286;27.4694;3.27638e+08
+BParser no vectorization;25;acos(v1);nan;40000;256;0.237254;23.1693;3.88444e+08
+BParser no vectorization;26;tan(v1);6.08448;40000;256;1.02054;99.6619;9.03053e+07
+BParser no vectorization;27;tanh(v1);768;40000;256;0.114992;11.2297;8.01444e+08
+BParser no vectorization;28;atan(v1);1204.21;40000;256;0.387258;37.8182;2.37981e+08
+BParser no vectorization;29;ceil(v1);371328;40000;256;0.0649904;6.34672;1.41806e+09
+BParser no vectorization;30;floor(v1);371328;40000;256;0.064916;6.33945;1.41968e+09
+BParser no vectorization;31;isnan(v1);0;40000;256;0.0255169;2.49189;3.61172e+09
+BParser no vectorization;32;isinf(v1);0;40000;256;0.0322845;3.15278;2.85462e+09
+BParser no vectorization;33;sgn(v1);768;40000;256;0.0325072;3.17453;2.83507e+09
+BParser no vectorization;34;atan2(v1, v2);513.346;40000;256;0.801254;78.2474;1.1502e+08
+BParser no vectorization;35;v1 ** v2;inf;40000;256;0.50106;48.9316;1.8393e+08
+BParser no vectorization;36;maximum(v1, v2);448128;40000;256;0.0429335;4.19272;2.14658e+09
+BParser no vectorization;37;minimum(v1, v2);371328;40000;256;0.0327763;3.20081;2.81179e+09
+BParser no vectorization;38;v3 if v1 == v2 else v4;601728;40000;256;0.1072;10.4688;8.59698e+08
+BParser no vectorization;39;cv1 + v1 + v2 - v3;299136;40000;256;0.100625;9.82665;9.15877e+08
+BParser no vectorization;40;cs1 - v1 + v2 * v3;3.43676e+08;40000;256;0.0991844;9.68597;9.29179e+08
+BParser no vectorization;41;cs1 * v1 / v2;2440.44;40000;256;0.0741113;7.23743;1.24353e+09
+BParser no vectorization;42;cv1 / v1 * v2 / v3;8.4084;40000;256;0.118398;11.5623;7.78392e+08
+BParser no vectorization;43;v1 + v2 + v3 + v4;1.94611e+06;40000;256;0.0985831;9.62725;9.34846e+08
+BParser no vectorization;44;3 * v1 + cs1 * v2 + v3 + 2.5 * v4;4.93574e+06;40000;256;0.197375;19.2749;4.66929e+08
+BParser no vectorization;0;-v1;-5.02426e+06;10000;1024;0.0213655;2.08648;4.31349e+09
+BParser no vectorization;1;v1 + v2;1.03557e+07;10000;1024;0.0328153;3.20462;2.80844e+09
+BParser no vectorization;2;v1 - v2;-307200;10000;1024;0.0322585;3.15024;2.85692e+09
+BParser no vectorization;3;v1 * v2;1.11355e+10;10000;1024;0.0324213;3.16614;2.84258e+09
+BParser no vectorization;4;v1 / v2;2792.28;10000;1024;0.0416574;4.0681;2.21233e+09
+BParser no vectorization;5;v1 % v2;5.02426e+06;10000;1024;0.182102;17.7834;5.06091e+08
+BParser no vectorization;6;(v1 == v2);0;10000;1024;0.0638035;6.23081;1.44443e+09
+BParser no vectorization;7;v1 != v2;-nan;10000;1024;0.0690013;6.73841;1.33563e+09
+BParser no vectorization;8;v1 < v2;-nan;10000;1024;0.0737034;7.1976;1.25042e+09
+BParser no vectorization;9;v1 <= v2;-nan;10000;1024;0.061918;6.04668;1.48842e+09
+BParser no vectorization;10;v1 > v2;0;10000;1024;0.0836846;8.17232;1.10128e+09
+BParser no vectorization;11;v1 >= v2;0;10000;1024;0.0634577;6.19704;1.45231e+09
+BParser no vectorization;12;not (v1 == v2);-nan;10000;1024;0.0882571;8.61886;1.04422e+09
+BParser no vectorization;13;v1 or v2;1.83042e+07;10000;1024;0.0328995;3.21284;2.80126e+09
+BParser no vectorization;14;v1 and v2;4.46159e+06;10000;1024;0.0328466;3.20767;2.80577e+09
+BParser no vectorization;15;abs(v1);5.02426e+06;10000;1024;0.0215398;2.10349;4.2786e+09
+BParser no vectorization;16;sqrt(v1);118409;10000;1024;0.062074;6.06191;1.48468e+09
+BParser no vectorization;17;exp(v1);inf;10000;1024;0.254855;24.8882;3.61617e+08
+BParser no vectorization;18;log(v1);22038.8;10000;1024;0.200258;19.5564;4.60206e+08
+BParser no vectorization;19;log10(v1);9571.33;10000;1024;0.374222;36.5451;2.46271e+08
+BParser no vectorization;20;sin(v1);0.471205;10000;1024;0.437887;42.7624;2.10465e+08
+BParser no vectorization;21;sinh(v1);inf;10000;1024;0.341726;33.3717;2.6969e+08
+BParser no vectorization;22;asin(v1);nan;10000;1024;0.230934;22.5522;3.99075e+08
+BParser no vectorization;23;cos(v1);-0.14629;10000;1024;0.442282;43.1916;2.08374e+08
+BParser no vectorization;24;cosh(v1);inf;10000;1024;0.29526;28.834;3.12132e+08
+BParser no vectorization;25;acos(v1);nan;10000;1024;0.235058;22.9549;3.92073e+08
+BParser no vectorization;26;tan(v1);315.128;10000;1024;1.20862;118.029;7.62522e+07
+BParser no vectorization;27;tanh(v1);3072;10000;1024;0.114115;11.144;8.07607e+08
+BParser no vectorization;28;atan(v1);4822.02;10000;1024;0.379988;37.1082;2.42534e+08
+BParser no vectorization;29;ceil(v1);5.02426e+06;10000;1024;0.0639967;6.24968;1.44007e+09
+BParser no vectorization;30;floor(v1);5.02426e+06;10000;1024;0.0641367;6.26335;1.43693e+09
+BParser no vectorization;31;isnan(v1);0;10000;1024;0.0245816;2.40055;3.74914e+09
+BParser no vectorization;32;isinf(v1);0;10000;1024;0.0268824;2.62524;3.42826e+09
+BParser no vectorization;33;sgn(v1);3072;10000;1024;0.0313664;3.06312;2.93818e+09
+BParser no vectorization;34;atan2(v1, v2);2260.13;10000;1024;0.780683;76.2386;1.1805e+08
+BParser no vectorization;35;v1 ** v2;inf;10000;1024;0.492627;48.1081;1.87079e+08
+BParser no vectorization;36;maximum(v1, v2);5.33146e+06;10000;1024;0.0416071;4.06319;2.21501e+09
+BParser no vectorization;37;minimum(v1, v2);5.02426e+06;10000;1024;0.0317186;3.09752;2.90555e+09
+BParser no vectorization;38;v3 if v1 == v2 else v4;5.94586e+06;10000;1024;0.10379;10.1357;8.8795e+08
+BParser no vectorization;39;cv1 + v1 + v2 - v3;4.73549e+06;10000;1024;0.0965202;9.4258;9.54826e+08
+BParser no vectorization;40;cs1 - v1 + v2 * v3;1.21968e+10;10000;1024;0.0972432;9.49641;9.47727e+08
+BParser no vectorization;41;cs1 * v1 / v2;11169.1;10000;1024;0.0733782;7.16584;1.25596e+09
+BParser no vectorization;42;cv1 / v1 * v2 / v3;12.9113;10000;1024;0.115647;11.2937;7.96907e+08
+BParser no vectorization;43;v1 + v2 + v3 + v4;2.19402e+07;10000;1024;0.0964221;9.41622;9.55798e+08
+BParser no vectorization;44;3 * v1 + cs1 * v2 + v3 + 2.5 * v4;5.69019e+07;10000;1024;0.192623;18.8108;4.78449e+08
