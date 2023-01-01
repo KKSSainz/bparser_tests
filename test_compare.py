@@ -223,7 +223,7 @@ if __name__ == "__main__":
     #index (ID) of categories (inclusive)
     category_sep_indexes = [6, 15, 38, 999] # => 0-5, 6-14, 15-37, 36-end(44)
 
-    final_path = "ntb/"
+    final_path = "charon/"
     base_path = "/home/vic/Documents/"
     current_path = base_path + "bparser/"
     old_path = base_path + "bparser_preVCL/"
@@ -237,11 +237,6 @@ if __name__ == "__main__":
     if (not os.path.isdir(results_path)):
            os.mkdir(results_path)
 
-    # current_path = "/home/jakub/bparser_Vicfork/bparser/"
-    # old_path = "/home/jakub/bparser_starej_na_porovnani/bparser/"
-
-    # tests_path = "/home/jakub/bparser_Vicfork/tests/"
-    # results_path = "/home/jakub/bparser_Vicfork/"
 
     if run_tests_switch:
         for i in range(num_of_test_runs):
