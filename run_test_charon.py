@@ -24,8 +24,10 @@ if __name__ == "__main__":
     tests_path = t_path + final_path
     res_path = base_path + "bparser_tests/results/"
     results_path = res_path + final_path
+    if (not os.path.isdir(t_path)):
+           os.mkdir(t_path)
     if (not os.path.isdir(tests_path)):
-           os.mkdir(tests_path)
+        os.mkdir(tests_path)
     if (not os.path.isdir(res_path)):
            os.mkdir(res_path)
     if (not os.path.isdir(results_path)):
