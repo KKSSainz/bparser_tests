@@ -54,7 +54,9 @@ def porovnani_old_vs_avx2(data_cat):
         marker_color='lightsalmon'
     ))
     fig.show()
-    fig.write_image("figure_old_vs_avx.pdf", engine="kaleido")
+    fig.write_image(results_path + "figure_old_vs_avx.pdf", engine="kaleido")
+    
+    
     # porovnání první kategorie
     fig = px.bar(data_med_cat1_old_and_avx, y="Ratio", x="Expression", color="Executor",
                  hover_data=["Ratio"],
@@ -64,7 +66,7 @@ def porovnani_old_vs_avx2(data_cat):
                  title="BParser OLD vs BParser AVX2"
                  )
     fig.show()
-    fig.write_image("figure_old_vs_avx_first_cat.pdf", engine="kaleido")
+    fig.write_image(results_path + "figure_old_vs_avx_first_cat.pdf", engine="kaleido")
     
 def getCategory(dataFrame, category_sep_indexes):
     ret = []
@@ -104,7 +106,7 @@ def porovnaniBlockSize(categories, title):
     ))
 
     #fig.show()
-    fig.write_image("figure_block_size.pdf", engine="kaleido")
+    fig.write_image(results_path + "figure_block_size.pdf", engine="kaleido")
 
 
 def porovnani_simd_size(data_med):
@@ -164,7 +166,7 @@ def porovnani_simd_size(data_med):
         marker_color='lightgreen'
     ))
     fig.show()
-    fig.write_image("figure_simd_size.pdf", engine="kaleido")
+    fig.write_image(results_path + "figure_simd_size.pdf", engine="kaleido")
 
 if __name__ == "__main__":
 
@@ -181,9 +183,12 @@ if __name__ == "__main__":
     current_path = base_path + "bparser/"
     old_path = base_path + "bparser_preVCL/"
     tests_path = base_path + "bparser_tests/tests/" + final_path
-    results_path = base_path + "bparser_tests/results/" + final_path
+    res_path = base_path + "bparser_tests/results/"
+    results_path = res_path + final_path
     if (not os.path.isdir(tests_path)):
            os.mkdir(tests_path)
+    if (not os.path.isdir(res_path)):
+           os.mkdir(res_path)
     if (not os.path.isdir(results_path)):
            os.mkdir(results_path)
 
