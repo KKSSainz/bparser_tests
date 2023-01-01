@@ -53,7 +53,8 @@ def porovnani_old_vs_avx2(data_cat):
         name='BParser OLD',
         marker_color='lightsalmon'
     ))
-    #fig.show()
+    fig.show()
+    fig.write_image("figure_old_vs_avx.pdf", engine="kaleido")
     # porovnání první kategorie
     fig = px.bar(data_med_cat1_old_and_avx, y="Ratio", x="Expression", color="Executor",
                  hover_data=["Ratio"],
@@ -63,6 +64,7 @@ def porovnani_old_vs_avx2(data_cat):
                  title="BParser OLD vs BParser AVX2"
                  )
     fig.show()
+    fig.write_image("figure_old_vs_avx_first_cat.pdf", engine="kaleido")
     
 def getCategory(dataFrame, category_sep_indexes):
     ret = []
@@ -102,6 +104,7 @@ def porovnaniBlockSize(categories, title):
     ))
 
     #fig.show()
+    fig.write_image("figure_block_size.pdf", engine="kaleido")
 
 
 def porovnani_simd_size(data_med):
@@ -161,6 +164,7 @@ def porovnani_simd_size(data_med):
         marker_color='lightgreen'
     ))
     fig.show()
+    fig.write_image("figure_simd_size.pdf", engine="kaleido")
 
 if __name__ == "__main__":
 
@@ -172,15 +176,16 @@ if __name__ == "__main__":
     #index (ID) of categories (inclusive)
     category_sep_indexes = [5, 14, 36, 999] # => 0-4, 5-13, 14-35, 36-end(44)
 
+    final_path = "ntb/"
     base_path = "/home/vic/Documents/"
     current_path = base_path + "bparser/"
     old_path = base_path + "bparser_preVCL/"
-    tests_path = base_path + "bparser_tests/tests/"
-    results_path = base_path + "bparser_tests/"
-    if (not os.path.isdir(results_path)):
-       os.mkdir(results_path)
+    tests_path = base_path + "bparser_tests/tests/" + final_path
+    results_path = base_path + "bparser_tests/results/" + final_path
     if (not os.path.isdir(tests_path)):
            os.mkdir(tests_path)
+    if (not os.path.isdir(results_path)):
+           os.mkdir(results_path)
 
     # current_path = "/home/jakub/bparser_Vicfork/bparser/"
     # old_path = "/home/jakub/bparser_starej_na_porovnani/bparser/"
