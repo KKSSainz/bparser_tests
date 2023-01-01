@@ -45,27 +45,31 @@ def porovnani_old_vs_avx2(data_cat):
         x=["Arithmetic", "Boolean", "Function", "Composed"],
         y=[cat1_ratio_median, cat2_ratio_median, cat3_ratio_median, cat4_ratio_median],
         name='BParser AVX2',
-        marker_color='lightblue'
+        marker_color='blue'
     ))
     fig.add_trace(go.Bar(
         x=["Arithmetic", "Boolean", "Function", "Composed"],
         y=[1, 1, 1, 1],
         name='BParser OLD',
-        marker_color='lightsalmon'
+        marker_color='lime'
     ))
-    fig.show()
+    fig.update_yaxes(title_text="Ratio", dtick=0.1)
+    #fig.show()
     fig.write_image(results_path + "figure_old_vs_avx.pdf", engine="kaleido")
     
     
     # porovnání první kategorie
     fig = px.bar(data_med_cat1_old_and_avx, y="Ratio", x="Expression", color="Executor",
                  hover_data=["Ratio"],
-                 labels={"Time": "Čas", "Expression": "Výraz", "Executor": "Procesor"},
+                 labels={"Time": "Ratio", "Expression": "Expression", "Executor": "Procesor"},
                  # customize axis label
+                 color_discrete_sequence=["blue", "lime"],
                  barmode='group',
                  title="BParser OLD vs BParser AVX2"
                  )
-    fig.show()
+    
+    fig.update_yaxes(title_text="Ratio", dtick=0.1)
+    #fig.show()
     fig.write_image(results_path + "figure_old_vs_avx_first_cat.pdf", engine="kaleido")
     
 def getCategory(dataFrame, category_sep_indexes):
@@ -88,23 +92,24 @@ def porovnaniBlockSize(categories, title):
         x=["Arithmetic", "Boolean", "Function", "Composed"],
         y=[1, 1, 1, 1],
         name='64',
-        marker_color='lightsalmon'
+        marker_color='lightgray'
     ))
     fig.add_trace(go.Bar(
         x=["Arithmetic", "Boolean", "Function", "Composed"],
         y=[blockRatio64To256(novec_cat1_med), blockRatio64To256(novec_cat2_med), blockRatio64To256(novec_cat3_med),
            blockRatio64To256(novec_cat4_med)],
         name='256',
-        marker_color='lightblue'
+        marker_color='gray'
     ))
     fig.add_trace(go.Bar(
         x=["Arithmetic", "Boolean", "Function", "Composed"],
         y=[blockRatio64To1024(novec_cat1_med), blockRatio64To1024(novec_cat2_med), blockRatio64To1024(novec_cat3_med),
            blockRatio64To1024(novec_cat4_med)],
         name='1024',
-        marker_color='lightyellow'
+        marker_color='black'
     ))
 
+    fig.update_yaxes(title_text="Ratio", dtick=0.1)
     #fig.show()
     fig.write_image(results_path + "figure_block_size.pdf", engine="kaleido")
 
@@ -144,28 +149,30 @@ def porovnani_simd_size(data_med):
         x=["Arithmetic", "Boolean", "Function", "Composed"],
         y=[1, 1, 1, 1],
         name='N/A',
-        marker_color='lightsalmon'
+        marker_color='red'
     ))
 
     fig.add_trace(go.Bar(
         x=["Arithmetic", "Boolean", "Function", "Composed"],
         y=[ratio_sse_to_novec_cat1, ratio_sse_to_novec_cat2, ratio_sse_to_novec_cat3, ratio_sse_to_novec_cat4],
         name='SSE',
-        marker_color='lightblue'
+        marker_color='yellow'
     ))
     fig.add_trace(go.Bar(
         x=["Arithmetic", "Boolean", "Function", "Composed"],
         y=[ratio_avx_to_novec_cat1, ratio_avx_to_novec_cat2, ratio_avx_to_novec_cat3, ratio_avx_to_novec_cat4],
         name='AVX2',
-        marker_color='lightyellow'
+        marker_color='blue'
     ))
     fig.add_trace(go.Bar(
         x=["Arithmetic", "Boolean", "Function", "Composed"],
         y=[ratio_avx512_to_novec_cat1, ratio_avx512_to_novec_cat2, ratio_avx512_to_novec_cat3, ratio_avx512_to_novec_cat4],
         name='AVX512',
-        marker_color='lightgreen'
+        marker_color='green'
     ))
-    fig.show()
+    
+    fig.update_yaxes(title_text="Ratio", dtick=0.1)
+    #fig.show()
     fig.write_image(results_path + "figure_simd_size.pdf", engine="kaleido")
     
     
@@ -192,22 +199,24 @@ def porovnani_cpp_vs_avx512(data_cat):
         x=["Arithmetic", "Boolean", "Function", "Composed"],
         y=[cat1_ratio_median, cat2_ratio_median, cat3_ratio_median, cat4_ratio_median],
         name='BParser AVX512',
-        marker_color='lightgreen'
+        marker_color='green'
     ))
     fig.add_trace(go.Bar(
         x=["Arithmetic", "Boolean", "Function", "Composed"],
         y=[1, 1, 1, 1],
         name='C++',
-        marker_color='lightgrey'
+        marker_color='blue'
     ))
-    fig.show()
+    
+    fig.update_yaxes(title_text="Ratio", dtick=0.1)
+    #fig.show()
     fig.write_image(results_path + "figure_cpp_vs_avx512.pdf", engine="kaleido")
     
 
 if __name__ == "__main__":
 
     run_tests_switch = False
-    num_of_test_runs = 2
+    num_of_test_runs = 10
     files = []
     simd_sizes = [1, 2, 4, 8]
 

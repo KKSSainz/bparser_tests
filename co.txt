@@ -2,3 +2,15 @@ OLD vs NEW ... dodělat test po tech prumernych kategoriich
 
 
 bparser preVCL commit key: fdd85ed
+
+barvy:
+    BParser OLD                 :   lime
+    BParser no vectorization    :   red
+    BParser SSE                 :   yellow
+    BParser AVX2                :   blue
+    BParser AVX512              :   green
+    C++                         :   blue
+
+    block 64                    :   lightgray
+    block 256                   :   gray
+    block 1024                  :   black
