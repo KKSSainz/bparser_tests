@@ -252,6 +252,7 @@ void test_expression(std::string filename)  {
 		test_expr("v1 - v2", block_sizes[i], std::to_string(id_counter++), file);
 		test_expr("v1 * v2", block_sizes[i], std::to_string(id_counter++), file);
 		test_expr("v1 / v2", block_sizes[i], std::to_string(id_counter++), file);
+		test_expr("v1 % v2", block_sizes[i], std::to_string(id_counter++), file);
 
 		test_expr("(v1 == v2)", block_sizes[i], std::to_string(id_counter++), file);
 		test_expr("v1 != v2", block_sizes[i], std::to_string(id_counter++), file);
@@ -283,16 +284,15 @@ void test_expression(std::string filename)  {
 		test_expr("isinf(v1)", block_sizes[i], std::to_string(id_counter++), file);
 		test_expr("sgn(v1)", block_sizes[i], std::to_string(id_counter++), file);
 		test_expr("atan2(v1, v2)", block_sizes[i], std::to_string(id_counter++), file);
+		test_expr("v1 ** v2", block_sizes[i], std::to_string(id_counter++), file);
 		test_expr("maximum(v1, v2)", block_sizes[i], std::to_string(id_counter++), file);
 		test_expr("minimum(v1, v2)", block_sizes[i], std::to_string(id_counter++), file);
 
-		test_expr("v1 % v2", block_sizes[i], std::to_string(id_counter++), file);
-		test_expr("v1 ** v2", block_sizes[i], std::to_string(id_counter++), file);
 		test_expr("v3 if v1 == v2 else v4", block_sizes[i], std::to_string(id_counter++), file);
-		test_expr("cv1 + v1", block_sizes[i], std::to_string(id_counter++), file);
-		test_expr("cs1 - v1", block_sizes[i], std::to_string(id_counter++), file);
-		test_expr("cs1 * v1", block_sizes[i], std::to_string(id_counter++), file);
-		test_expr("cv1 / v1", block_sizes[i], std::to_string(id_counter++), file);
+		test_expr("cv1 + v1 + v2 - v3", block_sizes[i], std::to_string(id_counter++), file);
+		test_expr("cs1 - v1 + v2 * v3", block_sizes[i], std::to_string(id_counter++), file);
+		test_expr("cs1 * v1 / v2", block_sizes[i], std::to_string(id_counter++), file);
+		test_expr("cv1 / v1 * v2 / v3", block_sizes[i], std::to_string(id_counter++), file);
 		test_expr("v1 + v2 + v3 + v4", block_sizes[i], std::to_string(id_counter++), file);
 		test_expr("3 * v1 + cs1 * v2 + v3 + 2.5 * v4", block_sizes[i], std::to_string(id_counter++), file);
 		// test_expr("[v2, v2, v2] @ v1 + v3", block_sizes[i], std::to_string(id_counter++), file);

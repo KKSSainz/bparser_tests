@@ -167,6 +167,42 @@ def porovnani_simd_size(data_med):
     ))
     fig.show()
     fig.write_image(results_path + "figure_simd_size.pdf", engine="kaleido")
+    
+    
+def porovnani_cpp_vs_avx512(data_cat):
+    
+    data_med_cat1_cpp_and_avx512 = data_cat[0].loc[data_cat[0]["Executor"].isin(["BParser AVX512", "C++"])]
+    cat1_ratio = pd.DataFrame(data_med_cat1_cpp_and_avx512).groupby(['Expression']).apply(ratio)
+    # add ratio 1 to cpp
+    data_med_cat1_cpp_and_avx512['Ratio'] = [cat1_ratio.values[x] if x < cat1_ratio.values.size else 1 for x in
+                                          range(cat1_ratio.values.size * 2)]
+    cat1_ratio_median = cat1_ratio.median()
+    data_med_cat2_cpp_and_avx512 = data_cat[1].loc[data_cat[1]["Executor"].isin(["BParser AVX512", "C++"])]
+    cat2_ratio = pd.DataFrame(data_med_cat2_cpp_and_avx512).groupby(['Expression']).apply(ratio)
+    cat2_ratio_median = cat2_ratio.median()
+    data_med_cat3_cpp_and_avx512 = data_cat[2].loc[data_cat[2]["Executor"].isin(["BParser AVX512", "C++"])]
+    cat3_ratio = pd.DataFrame(data_med_cat3_cpp_and_avx512).groupby(['Expression']).apply(ratio)
+    cat3_ratio_median = cat3_ratio.median()
+    data_med_cat4_cpp_and_avx512 = data_cat[3].loc[data_cat[3]["Executor"].isin(["BParser AVX512", "C++"])]
+    cat4_ratio = pd.DataFrame(data_med_cat4_cpp_and_avx512).groupby(['Expression']).apply(ratio)
+    cat4_ratio_median = cat4_ratio.median()
+    fig = go.Figure()
+    # porovnání kategorii
+    fig.add_trace(go.Bar(
+        x=["Arithmetic", "Boolean", "Function", "Composed"],
+        y=[cat1_ratio_median, cat2_ratio_median, cat3_ratio_median, cat4_ratio_median],
+        name='BParser AVX512',
+        marker_color='lightgreen'
+    ))
+    fig.add_trace(go.Bar(
+        x=["Arithmetic", "Boolean", "Function", "Composed"],
+        y=[1, 1, 1, 1],
+        name='C++',
+        marker_color='lightgrey'
+    ))
+    fig.show()
+    fig.write_image(results_path + "figure_cpp_vs_avx512.pdf", engine="kaleido")
+    
 
 if __name__ == "__main__":
 
@@ -176,7 +212,7 @@ if __name__ == "__main__":
     simd_sizes = [1, 2, 4, 8]
 
     #index (ID) of categories (inclusive)
-    category_sep_indexes = [5, 14, 36, 999] # => 0-4, 5-13, 14-35, 36-end(44)
+    category_sep_indexes = [6, 15, 38, 999] # => 0-5, 6-14, 15-37, 36-end(44)
 
     final_path = "ntb/"
     base_path = "/home/vic/Documents/"
@@ -283,7 +319,7 @@ if __name__ == "__main__":
 
     porovnani_simd_size(data_med)
 
-    
+    porovnani_cpp_vs_avx512(data_med_cat)
 
     #ratio_df = pd.DataFrame(data_med).groupby(['ID', 'Expression']).apply(ratio)
     #ratio_df = pd.concat([ratio_df] * 2, ignore_index=True)
