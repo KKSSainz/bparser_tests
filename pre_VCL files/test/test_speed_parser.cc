@@ -85,7 +85,7 @@ void test_expr(std::string expr, uint block_size, std::string expr_id, std::ofst
 	// e.g. p.set_variable could return pointer to that pointer
 	// not so easy for vector and tensor variables, there are many pointers to set
 	// Rather modify the test to fill the
-	uint n_repeats = (1024 / block_size) * 10000;
+	uint n_repeats = (1024 / block_size) * 100000;
 
 	ExprData  data1(vec_size);
 
