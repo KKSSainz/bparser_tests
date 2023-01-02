@@ -16,7 +16,7 @@ if __name__ == "__main__":
     #index (ID) of categories (inclusive)
     category_sep_indexes = [6, 15, 38, 999] # => 0-5, 6-14, 15-37, 36-end(44)
 
-    final_path = "charon/"
+    final_path = "charon512/"
     base_path = ""
     current_path = base_path + "bparser/"
     old_path = base_path + "bparser_preVCL/"
