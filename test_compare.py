@@ -39,7 +39,8 @@ def porovnani_old_vs_avx2(data_cat):
     data_med_cat4_old_and_avx = data_cat[3].loc[data_cat[3]["Executor"].isin(["BParser AVX2", "BParser_OLD"])]
     cat4_ratio = pd.DataFrame(data_med_cat4_old_and_avx).groupby(['Expression']).apply(ratio)
     cat4_ratio_median = cat4_ratio.median()
-    fig = go.Figure()
+    
+    fig = go.Figure(layout_title_text="BParser AVX2 vs BParser OLD")
     # porovnání kategorii
     fig.add_trace(go.Bar(
         x=["Arithmetic", "Boolean", "Function", "Composed"],
@@ -65,12 +66,15 @@ def porovnani_old_vs_avx2(data_cat):
                  # customize axis label
                  color_discrete_sequence=["blue", "lime"],
                  barmode='group',
-                 title="BParser OLD vs BParser AVX2"
+                 title="BParser AVX2 vs BParser OLD"
                  )
     
     fig.update_yaxes(title_text="Ratio", dtick=0.1)
     #fig.show()
     fig.write_image(results_path + "figure_old_vs_avx_first_cat.pdf", engine="kaleido")
+    
+    
+    
     
 def getCategory(dataFrame, category_sep_indexes):
     ret = []
@@ -79,6 +83,9 @@ def getCategory(dataFrame, category_sep_indexes):
     ret.append(dataFrame.loc[dataFrame["ID"].between(category_sep_indexes[1], category_sep_indexes[2] - 1)])
     ret.append(dataFrame.loc[dataFrame["ID"].between(category_sep_indexes[2], category_sep_indexes[3] - 1)])
     return ret
+
+
+
 
 
 def porovnaniBlockSize(categories, title):
@@ -123,11 +130,11 @@ def porovnani_simd_size(data_med):
     
     bparser_novec_cat = getCategory(bparser_novec, category_sep_indexes)
     
-    fig = go.Figure(layout_title_text="Porovnání SIMD size")
+    fig = go.Figure(layout_title_text="Compare SIMD size")
     fig.add_trace(go.Bar(
         x=["Arithmetic", "Boolean", "Function", "Composed"],
         y=[1, 1, 1, 1],
-        name='N/A',
+        name='1',
         marker_color='red'
     ))
     
@@ -143,7 +150,7 @@ def porovnani_simd_size(data_med):
         fig.add_trace(go.Bar(
             x=["Arithmetic", "Boolean", "Function", "Composed"],
             y=[ratio_sse_to_novec_cat1, ratio_sse_to_novec_cat2, ratio_sse_to_novec_cat3, ratio_sse_to_novec_cat4],
-            name='SSE',
+            name='2',
             marker_color='yellow'
         ))
         
@@ -158,7 +165,7 @@ def porovnani_simd_size(data_med):
         fig.add_trace(go.Bar(
             x=["Arithmetic", "Boolean", "Function", "Composed"],
             y=[ratio_avx_to_novec_cat1, ratio_avx_to_novec_cat2, ratio_avx_to_novec_cat3, ratio_avx_to_novec_cat4],
-            name='AVX2',
+            name='4',
             marker_color='blue'
         ))
 
@@ -174,13 +181,18 @@ def porovnani_simd_size(data_med):
         fig.add_trace(go.Bar(
             x=["Arithmetic", "Boolean", "Function", "Composed"],
             y=[ratio_avx512_to_novec_cat1, ratio_avx512_to_novec_cat2, ratio_avx512_to_novec_cat3, ratio_avx512_to_novec_cat4],
-            name='AVX512',
+            name='8',
             marker_color='green'
         ))
     
     fig.update_yaxes(title_text="Ratio", dtick=0.1)
     #fig.show()
     fig.write_image(results_path + "figure_simd_size.pdf", engine="kaleido")
+    
+    
+    
+    
+    
     
     
 def porovnani_cpp_vs_bp_type(data_cat, bparser_type):
@@ -200,7 +212,8 @@ def porovnani_cpp_vs_bp_type(data_cat, bparser_type):
     data_med_cat4_cpp_and_bp_type = data_cat[3].loc[data_cat[3]["Executor"].isin([f"BParser {bparser_type}", "C++"])]
     cat4_ratio = pd.DataFrame(data_med_cat4_cpp_and_bp_type).groupby(['Expression']).apply(ratio)
     cat4_ratio_median = cat4_ratio.median()
-    fig = go.Figure()
+    
+    fig = go.Figure(layout_title_text=f"BParser {bparser_type} vs C++")
     # porovnání kategorii
     fig.add_trace(go.Bar(
         x=["Arithmetic", "Boolean", "Function", "Composed"],
@@ -220,19 +233,32 @@ def porovnani_cpp_vs_bp_type(data_cat, bparser_type):
     fig.write_image(results_path + f"figure_cpp_vs_{bparser_type}.pdf", engine="kaleido")
     
 
+
+
+
+
+
+
+
+
+
 if __name__ == "__main__":
 
-    run_tests_switch = True
+    # changable variables
+    final_path = "ntb100k_avx2/"
+    run_tests_switch = False
+    max_simd_size = 4
     num_of_test_runs = 5
+    
+    # given
     files = []
     simd_sizes = [1, 2, 4, 8]
-    max_simd_size = 4
 
-    #index (ID) of categories (inclusive)
+    # index (ID) of categories (inclusive)
     category_sep_indexes = [6, 15, 38, 999] # => 0-5, 6-14, 15-37, 36-end(44)
 
-    final_path = "ntb100k_avx2/"
-    base_path = "/home/vic/Documents/"
+    # base_path = "/home/vic/Documents/"
+    base_path = "/Users/vic/Documents/TUL/"
     current_path = base_path + "bparser/"
     if max_simd_size > 2:
         old_path = base_path + "bparser_preVCL/"
@@ -253,7 +279,7 @@ if __name__ == "__main__":
     if run_tests_switch:
         for i in range(num_of_test_runs):
             for simd_size in simd_sizes:
-                #BParser with
+                # BParser with
                 if simd_size <= max_simd_size:
                     cprocess = subprocess.run(["./test_speed_parser_bin", f"test_parser{i}_simd{simd_size}.csv", str(simd_size)], cwd=os.path.join(current_path, "build"), )  # dokáže zavolat gcc nebo mělo by i make
                     os.replace(os.path.join(current_path, "build", f"test_parser{i}_simd{simd_size}.csv"), os.path.join(tests_path, f"test_parser{i}_simd{simd_size}.csv"))

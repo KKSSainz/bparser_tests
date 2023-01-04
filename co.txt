@@ -1,5 +1,8 @@
 OLD vs NEW ... dodělat test po tech prumernych kategoriich
 
+pip install pandas
+pip install plotly
+pip install -U kaleido
 
 bparser preVCL commit key: fdd85ed
 
