@@ -15,4 +15,6 @@ barvy:
     block 256                   :   gray
     block 1024                  :   black
     
-    ghat: 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
+    ghat_old reveaed by push: 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
+
+
