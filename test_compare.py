@@ -217,12 +217,12 @@ def porovnani_cpp_vs_bp_type(data_cat, bparser_type):
     
     fig.update_yaxes(title_text="Ratio", dtick=0.1)
     #fig.show()
-    fig.write_image(results_path + "figure_cpp_vs_avx512.pdf", engine="kaleido")
+    fig.write_image(results_path + f"figure_cpp_vs_{bparser_type}.pdf", engine="kaleido")
     
 
 if __name__ == "__main__":
 
-    run_tests_switch = False
+    run_tests_switch = True
     num_of_test_runs = 5
     files = []
     simd_sizes = [1, 2, 4, 8]
@@ -231,7 +231,7 @@ if __name__ == "__main__":
     #index (ID) of categories (inclusive)
     category_sep_indexes = [6, 15, 38, 999] # => 0-5, 6-14, 15-37, 36-end(44)
 
-    final_path = "old100k/"
+    final_path = "old100k_sse2/"
     base_path = "/home/vic/Documents/"
     current_path = base_path + "bparser/"
     if max_simd_size > 2:
