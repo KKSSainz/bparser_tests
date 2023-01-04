@@ -226,12 +226,12 @@ if __name__ == "__main__":
     num_of_test_runs = 5
     files = []
     simd_sizes = [1, 2, 4, 8]
-    max_simd_size = 2
+    max_simd_size = 4
 
     #index (ID) of categories (inclusive)
     category_sep_indexes = [6, 15, 38, 999] # => 0-5, 6-14, 15-37, 36-end(44)
 
-    final_path = "old100k_sse2/"
+    final_path = "ntb100k_avx2/"
     base_path = "/home/vic/Documents/"
     current_path = base_path + "bparser/"
     if max_simd_size > 2:
