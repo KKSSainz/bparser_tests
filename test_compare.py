@@ -234,7 +234,8 @@ if __name__ == "__main__":
     final_path = "old100k/"
     base_path = "/home/vic/Documents/"
     current_path = base_path + "bparser/"
-    old_path = base_path + "bparser_preVCL/"
+    if max_simd_size > 2:
+        old_path = base_path + "bparser_preVCL/"
     t_path = base_path + "bparser_tests/tests/"
     tests_path = t_path + final_path
     res_path = base_path + "bparser_tests/results/"
