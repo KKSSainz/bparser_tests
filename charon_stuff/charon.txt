@@ -1,0 +1,182 @@
+
+** test free variables
+free vars test: 1+2
+free vars test: pi+e+epsilon+dd
+free vars test: a+b
+free vars test: a=1;a+b
+
+** test expression
+parser test : [1,2,3]
+  AST: [1,2,3]
+parser test : [[1],[2],[3]]
+  AST: [[1],[2],[3]]
+parser test : [[1,2,3]]
+  AST: [[1,2,3]]
+parser test : cv4[0]
+  AST: [](`cv4`,list(index(0)))
+parser test : cv4[1:]
+  AST: [](`cv4`,list(slice(1,none_idx,none_idx)))
+parser test : cv4[-1:0:-1]
+  AST: [](`cv4`,list(slice(-1,0,-1)))
+parser test : cv4[::-1]
+  AST: [](`cv4`,list(slice(none_idx,none_idx,-1)))
+parser test : cv4[:-1]
+  AST: [](`cv4`,list(slice(none_idx,-1,none_idx)))
+parser test : cv4[-2]
+  AST: [](`cv4`,list(index(-2)))
+parser test : cv4[[0,2]]
+  AST: [](`cv4`,list([0,2]))
+parser test : cv4[None, :]
+  AST: [](`cv4`,list(index(none_idx),slice(none_idx,none_idx,none_idx)))
+parser test : cv4[:, None]
+  AST: [](`cv4`,list(slice(none_idx,none_idx,none_idx),index(none_idx)))
+parser test : a=[av2, cv4, 2*av2]; a[:,1]
+  AST: ;(a = [`av2`,`cv4`,*(2,`av2`)],[](`a`,list(slice(none_idx,none_idx,none_idx),index(1))))
+parser test : a=[av2, cv4, 2*av2]; b=[a, a-1]; b[:,1,:]
+  AST: ;(;(a = [`av2`,`cv4`,*(2,`av2`)],b = [`a`,-(`a`,1)]),[](`b`,list(slice(none_idx,none_idx,none_idx),index(1),slice(none_idx,none_idx,none_idx))))
+parser test : a=[av2, cv4, 2*av2]; b=[a, a-1]; b[1,:,1]
+  AST: ;(;(a = [`av2`,`cv4`,*(2,`av2`)],b = [`a`,-(`a`,1)]),[](`b`,list(index(1),slice(none_idx,none_idx,none_idx),index(1))))
+parser test : cs3 * av2
+  AST: *(`cs3`,`av2`)
+parser test : cv4 * av2
+  AST: *(`cv4`,`av2`)
+parser test : as1 - cv4
+  AST: -(`as1`,`cv4`)
+parser test : [2,3,4] / av2
+  AST: /([2,3,4],`av2`)
+parser test : [1,2][:, None] * [1,3][None,:]
+  AST: *([]([1,2],list(slice(none_idx,none_idx,none_idx),index(none_idx))),[]([1,3],list(index(none_idx),slice(none_idx,none_idx,none_idx))))
+parser test : cv4[1] ** av2
+  AST: **([](`cv4`,list(index(1))),`av2`)
+parser test : cv4[:2] ** 2
+  AST: **([](`cv4`,list(slice(none_idx,2,none_idx))),2)
+parser test : cv4[[0,1]] ** 2
+  AST: **([](`cv4`,list([0,1])),2)
+parser test : cv4[[0]] ** 2
+  AST: **([](`cv4`,list([0])),2)
+parser test : cs3[0]
+  AST: [](`cs3`,list(index(0)))
+parser test : cv4[0, None] * cv4[None, 1]
+  AST: *([](`cv4`,list(index(0),index(none_idx))),[](`cv4`,list(index(none_idx),index(1))))
+parser test : []
+  AST: empty_array(none_idx)
+parser test : [1,cv4,av2]
+  AST: [1,`cv4`,`av2`]
+parser test : [1,1]
+  AST: [1,1]
+parser test : a=[[1,1,1], cv4, av2]; a[:, 0]
+  AST: ;(a = [[1,1,1],`cv4`,`av2`],[](`a`,list(slice(none_idx,none_idx,none_idx),index(0))))
+parser test : [[1,2], [3,4]]
+  AST: [[1,2],[3,4]]
+parser test : cv4[2] ** av2
+  AST: **([](`cv4`,list(index(2))),`av2`)
+parser test : cs3 > 4.5
+  AST: close_chain(>(`cs3`,4.5))
+parser test : cs3 < 4.5
+  AST: close_chain(<(`cs3`,4.5))
+parser test : 2 < cs3 < 4.5
+  AST: close_chain(<(<(2,`cs3`),4.5))
+parser test : (2 < cs3) < 2
+  AST: close_chain(<(close_chain(<(2,`cs3`)),2))
+parser test : (2 < cs3) and (cs3 < 4.5)
+  AST: and(close_chain(<(2,`cs3`)),close_chain(<(`cs3`,4.5)))
+parser test : (2 < cs3) or (cs3 > 4.5)
+  AST: or(close_chain(<(2,`cs3`)),close_chain(>(`cs3`,4.5)))
+parser test : (2 < cs3) and (cs3 > 4.5)
+  AST: and(close_chain(<(2,`cs3`)),close_chain(>(`cs3`,4.5)))
+parser test : (2 > cs3) or (cs3 > 4.5)
+  AST: or(close_chain(>(2,`cs3`)),close_chain(>(`cs3`,4.5)))
+parser test : 3 >= cs3
+  AST: close_chain(>=(3,`cs3`))
+parser test : 3 == cs3
+  AST: close_chain(==(3,`cs3`))
+parser test : not (3 != cs3)
+  AST: not(close_chain(!=(3,`cs3`)))
+parser test : 3 if cs3 < 4.5 else 4
+  AST: ifelse(3,close_chain(<(`cs3`,4.5)),4)
+parser test : 3 if cs3 > 4.5 else 4
+  AST: ifelse(3,close_chain(>(`cs3`,4.5)),4)
+parser test : 0 if cv4 > 4.5 else 1
+  AST: ifelse(0,close_chain(>(`cv4`,4.5)),1)
+parser test : 5 if True else 6
+  AST: ifelse(5,True(0),6)
+parser test : 5 if False else 6
+  AST: ifelse(5,False(0),6)
+parser test : 25 % cs3
+  AST: %(25,`cs3`)
+parser test : 25 % cv4
+  AST: %(25,`cv4`)
+parser test : [3, 4] @ [[1], [2]]
+  AST: @([3,4],[[1],[2]])
+parser test : [3, 4, 1] @ [[1], [2], [3]]
+  AST: @([3,4,1],[[1],[2],[3]])
+parser test : [[1], [2], [3]] @ [3, 4, 1]
+  AST: @([[1],[2],[3]],[3,4,1])
+parser test : [1, 2, 3] @ [1, 2, 3]
+  AST: @([1,2,3],[1,2,3])
+parser test : [[1, 2], [2, 3], [3, 4]] @ [[1], [2]]
+  AST: @([[1,2],[2,3],[3,4]],[[1],[2]])
+parser test : [[1, 2], [2, 3], [3, 4]] @ [1, 2]
+  AST: @([[1,2],[2,3],[3,4]],[1,2])
+parser test : [[1],[2],[3]] @ [[1,2,3]]
+  AST: @([[1],[2],[3]],[[1,2,3]])
+parser test : a=[1,2,3]; a[:, None] @ a[None,:]
+  AST: ;(a = [1,2,3],@([](`a`,list(slice(none_idx,none_idx,none_idx),index(none_idx))),[](`a`,list(index(none_idx),slice(none_idx,none_idx,none_idx)))))
+parser test : abs(-1)+abs(0)+abs(1)
+  AST: +(+(abs(-(1)),abs(0)),abs(1))
+parser test : floor(-3.5)
+  AST: floor(-(3.5))
+parser test : ceil(-3.5)
+  AST: ceil(-(3.5))
+parser test : -sgn(-2) + sgn(2) + sgn(0)
+  AST: +(+(-(sgn(-(2))),sgn(2)),sgn(0))
+parser test : acos(0.5)
+  AST: acos(0.5)
+parser test : asin(0.5)
+  AST: asin(0.5)
+parser test : atan(1)
+  AST: atan(1)
+parser test : sin(pi*as1)
+  AST: sin(*(`pi`,`as1`))
+parser test : cos(pi*as1)
+  AST: cos(*(`pi`,`as1`))
+parser test : tan(pi*as1)
+  AST: tan(*(`pi`,`as1`))
+parser test : log2(8)
+  AST: log2(8)
+parser test : exp(0)
+  AST: exp(0)
+parser test : log(1)
+  AST: log(1)
+parser test : log10(10)
+  AST: log10(10)
+parser test : cosh(0)
+  AST: cosh(0)
+parser test : sinh(1)
+  AST: sinh(1)
+parser test : power(3, 4)
+  AST: power(3,4)
+parser test : sqrt(9)
+  AST: sqrt(9)
+parser test : flatten([[1,2],[3,4]])
+  AST: flatten([[1,2],[3,4]])
+parser test : eye(2)[0,0]
+  AST: [](eye(2),list(index(0),index(0)))
+parser test : eye(2)[1,0]
+  AST: [](eye(2),list(index(1),index(0)))
+parser test : eye(2)
+  AST: eye(2)
+parser test : flatten(eye(3))
+  AST: flatten(eye(3))
+parser test : zeros([2,3])
+  AST: zeros([2,3])
+parser test : ones([2,3])
+  AST: ones([2,3])
+parser test : minimum([1,2,3], [0,4,3])
+  AST: minimum([1,2,3],[0,4,3])
+parser test : maximum([1,2,3], [0,4,3])
+  AST: maximum([1,2,3],[0,4,3])
+
+** test bool expression
+parser test : bv5 < bv6
+  AST: close_chain(<(`bv5`,`bv6`))
