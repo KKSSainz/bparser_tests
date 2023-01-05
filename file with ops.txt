@@ -1,0 +1,52 @@
+Arithmetic
+-v1
+v1 + v2
+v1 - v2
+v1 * v2
+v1 / v2
+v1 % v2
+
+Boolean
+(v1 == v2)
+v1 != v2
+v1 < v2
+v1 <= v2
+v1 > v2
+v1 >= v2
+not (v1 == v2
+v1 or v2
+v1 and v2
+
+Function
+abs(v1)
+sqrt(v1)
+exp(v1)
+log(v1)
+log10(v1)
+sin(v1)
+sinh(v1)
+asin(v1)
+cos(v1)
+cosh(v1)
+acos(v1)
+tan(v1)
+tanh(v1)
+atan(v1)
+ceil(v1)
+floor(v1)
+isnan(v1)
+isinf(v1)
+sgn(v1)
+atan2(v1, v2)
+v1 ** v2
+maximum(v1, v2)
+minimum(v1, v2)
+
+Composed
+v3 if (v1 == v2) else v4
+cv1 + v1 + v2 - v3
+cs1 - v1 + v2 * v3
+cs1 * v1 / v2
+cv1 / v1 * v2 / v3
+v1 + v2 + v3 + v4
+3 * v1 + cs1 * v2 + v3 + 2.5 * v4
