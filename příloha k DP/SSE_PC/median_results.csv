@@ -1,0 +1,136 @@
+Executor;ID;Expression;Time
+BParser SSE;0;-v1;0.339063
+BParser SSE;1;v1 + v2;0.660615
+BParser SSE;2;v1 - v2;0.660619
+BParser SSE;3;v1 * v2;0.660592
+BParser SSE;4;v1 / v2;2.04029
+BParser SSE;5;v1 % v2;3.87718
+BParser SSE;6;(v1 == v2);1.30911
+BParser SSE;7;v1 != v2;1.30924
+BParser SSE;8;v1 < v2;1.30902
+BParser SSE;9;v1 <= v2;1.30903
+BParser SSE;10;v1 > v2;1.31428
+BParser SSE;11;v1 >= v2;1.30881
+BParser SSE;12;not (v1 == v2);1.79663
+BParser SSE;13;v1 or v2;0.658786
+BParser SSE;14;v1 and v2;0.659986
+BParser SSE;15;abs(v1);0.344371
+BParser SSE;16;sqrt(v1);2.87585
+BParser SSE;17;exp(v1);6.39959
+BParser SSE;18;log(v1);7.26416
+BParser SSE;19;log10(v1);7.8107
+BParser SSE;20;sin(v1);7.83726
+BParser SSE;21;sinh(v1);8.67267
+BParser SSE;22;asin(v1);9.9772
+BParser SSE;23;cos(v1);7.49258
+BParser SSE;24;cosh(v1);8.27878
+BParser SSE;25;acos(v1);10.4369
+BParser SSE;26;tan(v1);10.1013
+BParser SSE;27;tanh(v1);9.89582
+BParser SSE;28;atan(v1);9.52099
+BParser SSE;29;ceil(v1);1.06657
+BParser SSE;30;floor(v1);0.868807
+BParser SSE;31;isnan(v1);0.341816
+BParser SSE;32;isinf(v1);0.787746
+BParser SSE;33;sgn(v1);0.763527
+BParser SSE;34;atan2(v1, v2);14.9948
+BParser SSE;35;v1 ** v2;26.0418
+BParser SSE;36;maximum(v1, v2);0.659984
+BParser SSE;37;minimum(v1, v2);0.658742
+BParser SSE;38;v3 if v1 == v2 else v4;2.23358
+BParser SSE;39;cv1 + v1 + v2 - v3;1.95832
+BParser SSE;40;cs1 - v1 + v2 * v3;1.98793
+BParser SSE;41;cs1 * v1 / v2;2.63375
+BParser SSE;42;cv1 / v1 * v2 / v3;4.67062
+BParser SSE;43;v1 + v2 + v3 + v4;1.90916
+BParser SSE;44;3 * v1 + cs1 * v2 + v3 + 2.5 * v4;3.74696
+BParser no vectorization;0;-v1;0.609561
+BParser no vectorization;1;v1 + v2;0.725414
+BParser no vectorization;2;v1 - v2;0.723531
+BParser no vectorization;3;v1 * v2;0.725437
+BParser no vectorization;4;v1 / v2;2.0398
+BParser no vectorization;5;v1 % v2;3.74994
+BParser no vectorization;6;(v1 == v2);1.69019
+BParser no vectorization;7;v1 != v2;1.72269
+BParser no vectorization;8;v1 < v2;1.55832
+BParser no vectorization;9;v1 <= v2;1.55991
+BParser no vectorization;10;v1 > v2;1.6214
+BParser no vectorization;11;v1 >= v2;1.6229
+BParser no vectorization;12;not (v1 == v2);2.36042
+BParser no vectorization;13;v1 or v2;0.696325
+BParser no vectorization;14;v1 and v2;0.696313
+BParser no vectorization;15;abs(v1);0.58121
+BParser no vectorization;16;sqrt(v1);2.86729
+BParser no vectorization;17;exp(v1);6.65618
+BParser no vectorization;18;log(v1);6.9841
+BParser no vectorization;19;log10(v1);10.4249
+BParser no vectorization;20;sin(v1);15.2048
+BParser no vectorization;21;sinh(v1);8.74246
+BParser no vectorization;22;asin(v1);6.37767
+BParser no vectorization;23;cos(v1);15.3758
+BParser no vectorization;24;cosh(v1);8.1239
+BParser no vectorization;25;acos(v1);6.14237
+BParser no vectorization;26;tan(v1);21.8182
+BParser no vectorization;27;tanh(v1);2.22568
+BParser no vectorization;28;atan(v1);12.7043
+BParser no vectorization;29;ceil(v1);2.3001
+BParser no vectorization;30;floor(v1);2.35701
+BParser no vectorization;31;isnan(v1);0.813321
+BParser no vectorization;32;isinf(v1);0.935766
+BParser no vectorization;33;sgn(v1);0.869881
+BParser no vectorization;34;atan2(v1, v2);23.6425
+BParser no vectorization;35;v1 ** v2;18.218
+BParser no vectorization;36;maximum(v1, v2);0.963456
+BParser no vectorization;37;minimum(v1, v2);0.963476
+BParser no vectorization;38;v3 if v1 == v2 else v4;3.00066
+BParser no vectorization;39;cv1 + v1 + v2 - v3;2.03407
+BParser no vectorization;40;cs1 - v1 + v2 * v3;2.16917
+BParser no vectorization;41;cs1 * v1 / v2;2.74124
+BParser no vectorization;42;cv1 / v1 * v2 / v3;4.66648
+BParser no vectorization;43;v1 + v2 + v3 + v4;1.98296
+BParser no vectorization;44;3 * v1 + cs1 * v2 + v3 + 2.5 * v4;4.24921
+C++;0;-v1;0.433877
+C++;1;v1 + v2;0.520127
+C++;2;v1 - v2;0.51941
+C++;3;v1 * v2;0.520195
+C++;4;v1 / v2;2.06092
+C++;5;v1 % v2;4.05053
+C++;6;(v1 == v2);0.850244
+C++;7;v1 != v2;0.955434
+C++;8;v1 < v2;0.611965
+C++;9;v1 <= v2;0.612002
+C++;10;v1 > v2;0.719092
+C++;11;v1 >= v2;0.719059
+C++;12;not (v1 == v2);0.955554
+C++;13;v1 or v2;1.36612
+C++;14;v1 and v2;1.36617
+C++;15;abs(v1);0.433873
+C++;16;sqrt(v1);3.50395
+C++;17;exp(v1);7.38519
+C++;18;log(v1);7.37353
+C++;19;log10(v1);11.2347
+C++;20;sin(v1);15.627
+C++;21;sinh(v1);9.76665
+C++;22;asin(v1);6.81178
+C++;23;cos(v1);15.8717
+C++;24;cosh(v1);8.80295
+C++;25;acos(v1);6.80923
+C++;26;tan(v1);22.2104
+C++;27;tanh(v1);2.22542
+C++;28;atan(v1);12.6249
+C++;29;ceil(v1);2.16563
+C++;30;floor(v1);2.31001
+C++;31;isnan(v1);0.86629
+C++;32;isinf(v1);0.935667
+C++;33;sgn(v1);0.758136
+C++;34;atan2(v1, v2);24.5215
+C++;35;v1 ** v2;18.6338
+C++;36;maximum(v1, v2);0.712892
+C++;37;minimum(v1, v2);0.701814
+C++;38;v3 if v1 == v2 else v4;0.864932
+C++;39;cv1 + v1 + v2 - v3;0.738726
+C++;40;cs1 - v1 + v2 * v3;0.752965
+C++;41;cs1 * v1 / v2;2.03291
+C++;42;cv1 / v1 * v2 / v3;4.05767
+C++;43;v1 + v2 + v3 + v4;0.716583
+C++;44;3 * v1 + cs1 * v2 + v3 + 2.5 * v4;1.01209
