@@ -1,0 +1,192 @@
+64!=64
+64!=64
+64!=64
+=== Parsing of expression: 'v1 + v2 + v3 + v4' ===
+Block size: 64
+Diff: 0 parser: 265344 c++: 265344
+parser time optim   : 0.0131472
+parser shared arena : 0.00835708
+parser time copy    : 0
+parser time noopt   : 0.0129293
+c++ time            : 0.00399455
+fraction: 3.29127
+parser FLOPS: 7.00988e+08
+c++ FLOPS   : 2.30714e+09
+======================================================
+
+64!=64
+64!=64
+64!=64
+=== Parsing of expression: '3 * v1 + cs1 * v2 + v3 + 2.5 * v4' ===
+Block size: 64
+Diff: 0 parser: 653328 c++: 653328
+parser time optim   : 0.00736026
+parser shared arena : 0.00731073
+parser time copy    : 0
+parser time noopt   : 0.0123031
+c++ time            : 0.00551629
+fraction: 1.33428
+parser FLOPS: 1.25213e+09
+c++ FLOPS   : 1.67069e+09
+======================================================
+
+64!=64
+64!=64
+64!=64
+=== Parsing of expression: 'sin(v1)' ===
+Block size: 64
+Diff: 0 parser: 1.35473 c++: 1.35473
+parser time optim   : 0.0271389
+parser shared arena : 0.0268456
+parser time copy    : 0
+parser time noopt   : 0.0317742
+c++ time            : 0.0418496
+fraction: 0.648487
+parser FLOPS: 3.39586e+08
+c++ FLOPS   : 2.20217e+08
+======================================================
+
+64!=64
+64!=64
+64!=64
+=== Parsing of expression: '[v2, v2, v2] @ v1 + v3' ===
+Block size: 64
+Diff: 0 parser: 3.5121e+07 c++: 3.5121e+07
+parser time optim   : 0.00735691
+parser shared arena : 0.00730111
+parser time copy    : 0
+parser time noopt   : 0.0122584
+c++ time            : 0.00435165
+fraction: 1.6906
+parser FLOPS: 1.2527e+09
+c++ FLOPS   : 2.11782e+09
+======================================================
+
+64!=64
+64!=64
+64!=64
+=== Parsing of expression: 'v1 + v2 + v3 + v4' ===
+Block size: 256
+Diff: 0 parser: 1.94611e+06 c++: 1.94611e+06
+parser time optim   : 0.00384385
+parser shared arena : 0.00379857
+parser time copy    : 0
+parser time noopt   : 0.0116307
+c++ time            : 0.00399691
+fraction: 0.961705
+parser FLOPS: 2.3976e+09
+c++ FLOPS   : 2.30578e+09
+======================================================
+
+64!=64
+64!=64
+64!=64
+=== Parsing of expression: '3 * v1 + cs1 * v2 + v3 + 2.5 * v4' ===
+Block size: 256
+Diff: 0 parser: 4.93574e+06 c++: 4.93574e+06
+parser time optim   : 0.00720318
+parser shared arena : 0.00714586
+parser time copy    : 0
+parser time noopt   : 0.0148277
+c++ time            : 0.00540563
+fraction: 1.33253
+parser FLOPS: 1.27944e+09
+c++ FLOPS   : 1.70489e+09
+======================================================
+
+64!=64
+64!=64
+64!=64
+=== Parsing of expression: 'sin(v1)' ===
+Block size: 256
+Diff: 0 parser: -0.416043 c++: -0.416043
+parser time optim   : 0.0265797
+parser shared arena : 0.0266628
+parser time copy    : 0
+parser time noopt   : 0.034292
+c++ time            : 0.0432451
+fraction: 0.614628
+parser FLOPS: 3.46731e+08
+c++ FLOPS   : 2.13111e+08
+======================================================
+
+64!=64
+64!=64
+64!=64
+=== Parsing of expression: '[v2, v2, v2] @ v1 + v3' ===
+Block size: 256
+Diff: 0 parser: 7.63781e+08 c++: 7.63781e+08
+parser time optim   : 0.00667459
+parser shared arena : 0.00667845
+parser time copy    : 0
+parser time noopt   : 0.0147805
+c++ time            : 0.00391976
+fraction: 1.70281
+parser FLOPS: 1.38076e+09
+c++ FLOPS   : 2.35116e+09
+======================================================
+
+64!=64
+64!=64
+64!=64
+=== Parsing of expression: 'v1 + v2 + v3 + v4' ===
+Block size: 1024
+Diff: 0 parser: 2.19402e+07 c++: 2.19402e+07
+parser time optim   : 0.00415017
+parser shared arena : 0.0040937
+parser time copy    : 0
+parser time noopt   : 0.011839
+c++ time            : 0.00430528
+fraction: 0.963971
+parser FLOPS: 2.22063e+09
+c++ FLOPS   : 2.14063e+09
+======================================================
+
+64!=64
+64!=64
+64!=64
+=== Parsing of expression: '3 * v1 + cs1 * v2 + v3 + 2.5 * v4' ===
+Block size: 1024
+Diff: 0 parser: 5.69019e+07 c++: 5.69019e+07
+parser time optim   : 0.00736898
+parser shared arena : 0.00732576
+parser time copy    : 0
+parser time noopt   : 0.0153764
+c++ time            : 0.00530942
+fraction: 1.38791
+parser FLOPS: 1.25065e+09
+c++ FLOPS   : 1.73578e+09
+======================================================
+
+64!=64
+64!=64
+64!=64
+=== Parsing of expression: 'sin(v1)' ===
+Block size: 1024
+Diff: 0 parser: 0.471205 c++: 0.471205
+parser time optim   : 0.026642
+parser shared arena : 0.0267012
+parser time copy    : 0
+parser time noopt   : 0.0345998
+c++ time            : 0.0436229
+fraction: 0.610736
+parser FLOPS: 3.4592e+08
+c++ FLOPS   : 2.11265e+08
+======================================================
+
+64!=64
+64!=64
+64!=64
+=== Parsing of expression: '[v2, v2, v2] @ v1 + v3' ===
+Block size: 1024
+Diff: 0 parser: 3.34122e+10 c++: 3.34122e+10
+parser time optim   : 0.00838641
+parser shared arena : 0.00840277
+parser time copy    : 0
+parser time noopt   : 0.0163767
+c++ time            : 0.00422757
+fraction: 1.98374
+parser FLOPS: 1.09892e+09
+c++ FLOPS   : 2.17998e+09
+======================================================
+
