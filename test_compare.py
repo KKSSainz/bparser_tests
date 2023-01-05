@@ -245,9 +245,9 @@ def porovnani_cpp_vs_bp_type(data_cat, bparser_type):
 if __name__ == "__main__":
 
     # changable variables
-    final_path = "ntb100k_avx2/"
+    final_path = "old100k_sse2/"
     run_tests_switch = False
-    max_simd_size = 4
+    max_simd_size = 2
     num_of_test_runs = 5
     
     # given
@@ -257,8 +257,8 @@ if __name__ == "__main__":
     # index (ID) of categories (inclusive)
     category_sep_indexes = [6, 15, 38, 999] # => 0-5, 6-14, 15-37, 36-end(44)
 
-    # base_path = "/home/vic/Documents/"
-    base_path = "/Users/vic/Documents/TUL/"
+    base_path = "/home/vic/Documents/"
+    # base_path = "/Users/vic/Documents/TUL/"
     current_path = base_path + "bparser/"
     if max_simd_size > 2:
         old_path = base_path + "bparser_preVCL/"
