@@ -24,35 +24,35 @@ def blockRatio64To1024(g):
 
 def porovnani_old_vs_avx2(data_cat):
 
-    data_med_cat1_old_and_avx = data_cat[0].loc[data_cat[0]["Executor"].isin(["BParser AVX2", "BParser_OLD"])]
+    data_med_cat1_old_and_avx = data_cat[0].loc[data_cat[0]["Executor"].isin(["BParser_OLD", "BParser AVX2"])]
     cat1_ratio = pd.DataFrame(data_med_cat1_old_and_avx).groupby(['Expression']).apply(ratio)
     # add ratio 1 to old
     data_med_cat1_old_and_avx['Ratio'] = [cat1_ratio.values[x] if x < cat1_ratio.values.size else 1 for x in
                                           range(cat1_ratio.values.size * 2)]
     cat1_ratio_median = cat1_ratio.median()
-    data_med_cat2_old_and_avx = data_cat[1].loc[data_cat[1]["Executor"].isin(["BParser AVX2", "BParser_OLD"])]
+    data_med_cat2_old_and_avx = data_cat[1].loc[data_cat[1]["Executor"].isin(["BParser_OLD", "BParser AVX2"])]
     cat2_ratio = pd.DataFrame(data_med_cat2_old_and_avx).groupby(['Expression']).apply(ratio)
     cat2_ratio_median = cat2_ratio.median()
-    data_med_cat3_old_and_avx = data_cat[2].loc[data_cat[2]["Executor"].isin(["BParser AVX2", "BParser_OLD"])]
+    data_med_cat3_old_and_avx = data_cat[2].loc[data_cat[2]["Executor"].isin(["BParser_OLD", "BParser AVX2"])]
     cat3_ratio = pd.DataFrame(data_med_cat3_old_and_avx).groupby(['Expression']).apply(ratio)
     cat3_ratio_median = cat3_ratio.median()
-    data_med_cat4_old_and_avx = data_cat[3].loc[data_cat[3]["Executor"].isin(["BParser AVX2", "BParser_OLD"])]
+    data_med_cat4_old_and_avx = data_cat[3].loc[data_cat[3]["Executor"].isin(["BParser_OLD", "BParser AVX2"])]
     cat4_ratio = pd.DataFrame(data_med_cat4_old_and_avx).groupby(['Expression']).apply(ratio)
     cat4_ratio_median = cat4_ratio.median()
     
-    fig = go.Figure(layout_title_text="BParser AVX2 vs BParser OLD")
+    fig = go.Figure(layout_title_text="BParser OLD vs BParser AVX2")
     # porovnání kategorii
-    fig.add_trace(go.Bar(
-        x=["Arithmetic", "Boolean", "Function", "Composed"],
-        y=[cat1_ratio_median, cat2_ratio_median, cat3_ratio_median, cat4_ratio_median],
-        name='BParser AVX2',
-        marker_color='blue'
-    ))
     fig.add_trace(go.Bar(
         x=["Arithmetic", "Boolean", "Function", "Composed"],
         y=[1, 1, 1, 1],
         name='BParser OLD',
         marker_color='lime'
+    ))
+    fig.add_trace(go.Bar(
+        x=["Arithmetic", "Boolean", "Function", "Composed"],
+        y=[cat1_ratio_median, cat2_ratio_median, cat3_ratio_median, cat4_ratio_median],
+        name='BParser AVX2',
+        marker_color='blue'
     ))
     fig.update_yaxes(title_text="Ratio", dtick=0.1)
     #fig.show()
@@ -60,13 +60,14 @@ def porovnani_old_vs_avx2(data_cat):
     
     
     # porovnání první kategorie
+    data_med_cat1_old_and_avx.sort_values(['Executor'],ascending=[False],inplace=True)
     fig = px.bar(data_med_cat1_old_and_avx, y="Ratio", x="Expression", color="Executor",
                  hover_data=["Ratio"],
                  labels={"Time": "Ratio", "Expression": "Expression", "Executor": "Procesor"},
                  # customize axis label
-                 color_discrete_sequence=["blue", "lime"],
+                 color_discrete_sequence=["lime", "blue"],
                  barmode='group',
-                 title="BParser AVX2 vs BParser OLD"
+                 title="BParser OLD vs BParser AVX2"
                  )
     
     fig.update_yaxes(title_text="Ratio", dtick=0.1)
@@ -213,19 +214,30 @@ def porovnani_cpp_vs_bp_type(data_cat, bparser_type):
     cat4_ratio = pd.DataFrame(data_med_cat4_cpp_and_bp_type).groupby(['Expression']).apply(ratio)
     cat4_ratio_median = cat4_ratio.median()
     
+    colour = ""
+    match bparser_type:
+        case "AVX512":
+            colour = "green"
+        case "AVX2":
+            colour = "blue"
+        case "SSE":
+            colour = "yellow"
+        case _:
+            colour = "red"
+    
     fig = go.Figure(layout_title_text=f"BParser {bparser_type} vs C++")
     # porovnání kategorii
     fig.add_trace(go.Bar(
         x=["Arithmetic", "Boolean", "Function", "Composed"],
-        y=[cat1_ratio_median, cat2_ratio_median, cat3_ratio_median, cat4_ratio_median],
-        name=f"BParser {bparser_type}",
-        marker_color='green'
+        y=[1, 1, 1, 1],
+        name='C++',
+        marker_color='magenta'
     ))
     fig.add_trace(go.Bar(
         x=["Arithmetic", "Boolean", "Function", "Composed"],
-        y=[1, 1, 1, 1],
-        name='C++',
-        marker_color='blue'
+        y=[cat1_ratio_median, cat2_ratio_median, cat3_ratio_median, cat4_ratio_median],
+        name=f"BParser {bparser_type}",
+        marker_color=colour
     ))
     
     fig.update_yaxes(title_text="Ratio", dtick=0.1)
@@ -245,9 +257,18 @@ def porovnani_cpp_vs_bp_type(data_cat, bparser_type):
 if __name__ == "__main__":
 
     # changable variables
-    final_path = "old100k_sse2/"
-    run_tests_switch = False
-    max_simd_size = 2
+    # final_path = "old100k_sse2/"
+    # run_tests_switch = False
+    # max_simd_size = 2
+    
+    # final_path = "ntb100k_avx2/"
+    # run_tests_switch = False
+    # max_simd_size = 4
+    
+    # final_path = "charon100k/"
+    # run_tests_switch = False
+    # max_simd_size = 8
+    
     num_of_test_runs = 5
     
     # given
@@ -257,8 +278,8 @@ if __name__ == "__main__":
     # index (ID) of categories (inclusive)
     category_sep_indexes = [6, 15, 38, 999] # => 0-5, 6-14, 15-37, 36-end(44)
 
-    base_path = "/home/vic/Documents/"
-    # base_path = "/Users/vic/Documents/TUL/"
+    # base_path = "/home/vic/Documents/"
+    base_path = "/Users/vic/Documents/TUL/"
     current_path = base_path + "bparser/"
     if max_simd_size > 2:
         old_path = base_path + "bparser_preVCL/"

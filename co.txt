@@ -1,4 +1,5 @@
 OLD vs NEW ... dodělat test po tech prumernych kategoriich
+graf pro funkce hyperbolicke a nejake, videt rozdil, co je kde spatne
 
 pip install pandas
 pip install plotly
@@ -12,7 +13,7 @@ barvy:
     BParser SSE                 :   yellow
     BParser AVX2                :   blue
     BParser AVX512              :   green
-    C++                         :   blue
+    C++                         :   magenta
 
     block 64                    :   lightgray
     block 256                   :   gray
