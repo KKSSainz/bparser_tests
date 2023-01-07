@@ -1,6 +1,9 @@
 graf... SSE vs BPARSER old... ntb???
 graf nebo tabulka.. časy rychlostí hyperbolic vs non hyperbolic, CPP vs BParser all variants?
 
+
+DEMENT: opravit poradi sloupcu
+
 pip install pandas
 pip install plotly
 pip install -U kaleido

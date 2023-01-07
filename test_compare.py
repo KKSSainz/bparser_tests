@@ -44,15 +44,15 @@ def porovnani_old_vs_avx2(data_cat):
     # porovnání kategorii
     fig.add_trace(go.Bar(
         x=["Arithmetic", "Boolean", "Function", "Composed"],
-        y=[cat1_ratio_median, cat2_ratio_median, cat3_ratio_median, cat4_ratio_median],
-        name='BParser AVX2',
-        marker_color='blue'
-    ))
-    fig.add_trace(go.Bar(
-        x=["Arithmetic", "Boolean", "Function", "Composed"],
         y=[1, 1, 1, 1],
         name='BParser OLD',
         marker_color='lime'
+    ))
+    fig.add_trace(go.Bar(
+        x=["Arithmetic", "Boolean", "Function", "Composed"],
+        y=[cat1_ratio_median, cat2_ratio_median, cat3_ratio_median, cat4_ratio_median],
+        name='BParser AVX2',
+        marker_color='blue'
     ))
     
     fig.update_xaxes(title_text="Category")
@@ -62,13 +62,15 @@ def porovnani_old_vs_avx2(data_cat):
     
     
     # porovnání první kategorie
+    
+    data_med_cat1_old_and_avx.sort_values(['Executor'],ascending=[False],inplace=True)
     fig = px.bar(data_med_cat1_old_and_avx, y="Ratio", x="Expression", color="Executor",
                  hover_data=["Ratio"],
                  labels={"Time": "Ratio", "Expression": "Expression", "Executor": "Procesor"},
                  # customize axis label
                  color_discrete_sequence=["blue", "lime"],
                  barmode='group',
-                 title="BParser AVX2 vs BParser OLD"
+                 title="BParser OLD vs BParser AVX2"
                  )
     
     fig.update_yaxes(title_text="Ratio", dtick=0.1)
@@ -220,19 +222,32 @@ def porovnani_cpp_vs_bp_type(data_cat, bparser_type):
     cat4_ratio = pd.DataFrame(data_med_cat4_cpp_and_bp_type).groupby(['Expression']).apply(ratio)
     cat4_ratio_median = cat4_ratio.median()
     
+    
+    colour = ""
+    match bparser_type:
+        case "AVX512":
+            colour = "green"
+        case "AVX2":
+            colour = "blue"
+        case "SSE":
+            colour = "yellow"
+        case _:
+            colour = "red"
+    
+    
     fig = go.Figure(layout_title_text=f"C++ vs BParser {bparser_type}")
     # porovnání kategorii
     fig.add_trace(go.Bar(
         x=["Arithmetic", "Boolean", "Function", "Composed"],
-        y=[cat1_ratio_median, cat2_ratio_median, cat3_ratio_median, cat4_ratio_median],
-        name=f"BParser {bparser_type}",
-        marker_color='green'
+        y=[1, 1, 1, 1],
+        name='C++',
+        marker_color='magenta'
     ))
     fig.add_trace(go.Bar(
         x=["Arithmetic", "Boolean", "Function", "Composed"],
-        y=[1, 1, 1, 1],
-        name='C++',
-        marker_color='blue'
+        y=[cat1_ratio_median, cat2_ratio_median, cat3_ratio_median, cat4_ratio_median],
+        name=f"BParser {bparser_type}",
+        marker_color=colour
     ))
     
     fig.update_xaxes(title_text="Category")
