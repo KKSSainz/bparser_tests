@@ -24,50 +24,51 @@ def blockRatio64To1024(g):
 
 def porovnani_old_vs_avx2(data_cat):
 
-    data_med_cat1_old_and_avx = data_cat[0].loc[data_cat[0]["Executor"].isin(["BParser_OLD", "BParser AVX2"])]
+    data_med_cat1_old_and_avx = data_cat[0].loc[data_cat[0]["Executor"].isin(["BParser AVX2", "BParser_OLD"])]
     cat1_ratio = pd.DataFrame(data_med_cat1_old_and_avx).groupby(['Expression']).apply(ratio)
     # add ratio 1 to old
     data_med_cat1_old_and_avx['Ratio'] = [cat1_ratio.values[x] if x < cat1_ratio.values.size else 1 for x in
                                           range(cat1_ratio.values.size * 2)]
     cat1_ratio_median = cat1_ratio.median()
-    data_med_cat2_old_and_avx = data_cat[1].loc[data_cat[1]["Executor"].isin(["BParser_OLD", "BParser AVX2"])]
+    data_med_cat2_old_and_avx = data_cat[1].loc[data_cat[1]["Executor"].isin(["BParser AVX2", "BParser_OLD"])]
     cat2_ratio = pd.DataFrame(data_med_cat2_old_and_avx).groupby(['Expression']).apply(ratio)
     cat2_ratio_median = cat2_ratio.median()
-    data_med_cat3_old_and_avx = data_cat[2].loc[data_cat[2]["Executor"].isin(["BParser_OLD", "BParser AVX2"])]
+    data_med_cat3_old_and_avx = data_cat[2].loc[data_cat[2]["Executor"].isin(["BParser AVX2", "BParser_OLD"])]
     cat3_ratio = pd.DataFrame(data_med_cat3_old_and_avx).groupby(['Expression']).apply(ratio)
     cat3_ratio_median = cat3_ratio.median()
-    data_med_cat4_old_and_avx = data_cat[3].loc[data_cat[3]["Executor"].isin(["BParser_OLD", "BParser AVX2"])]
+    data_med_cat4_old_and_avx = data_cat[3].loc[data_cat[3]["Executor"].isin(["BParser AVX2", "BParser_OLD"])]
     cat4_ratio = pd.DataFrame(data_med_cat4_old_and_avx).groupby(['Expression']).apply(ratio)
     cat4_ratio_median = cat4_ratio.median()
     
-    fig = go.Figure(layout_title_text="BParser OLD vs BParser AVX2")
+    fig = go.Figure(layout_title_text="BParser AVX2 vs BParser OLD")
     # porovnání kategorii
-    fig.add_trace(go.Bar(
-        x=["Arithmetic", "Boolean", "Function", "Composed"],
-        y=[1, 1, 1, 1],
-        name='BParser OLD',
-        marker_color='lime'
-    ))
     fig.add_trace(go.Bar(
         x=["Arithmetic", "Boolean", "Function", "Composed"],
         y=[cat1_ratio_median, cat2_ratio_median, cat3_ratio_median, cat4_ratio_median],
         name='BParser AVX2',
         marker_color='blue'
     ))
+    fig.add_trace(go.Bar(
+        x=["Arithmetic", "Boolean", "Function", "Composed"],
+        y=[1, 1, 1, 1],
+        name='BParser OLD',
+        marker_color='lime'
+    ))
+    
+    fig.update_xaxes(title_text="Category")
     fig.update_yaxes(title_text="Ratio", dtick=0.1)
     #fig.show()
     fig.write_image(results_path + "figure_old_vs_avx.pdf", engine="kaleido")
     
     
     # porovnání první kategorie
-    data_med_cat1_old_and_avx.sort_values(['Executor'],ascending=[False],inplace=True)
     fig = px.bar(data_med_cat1_old_and_avx, y="Ratio", x="Expression", color="Executor",
                  hover_data=["Ratio"],
                  labels={"Time": "Ratio", "Expression": "Expression", "Executor": "Procesor"},
                  # customize axis label
-                 color_discrete_sequence=["lime", "blue"],
+                 color_discrete_sequence=["blue", "lime"],
                  barmode='group',
-                 title="BParser OLD vs BParser AVX2"
+                 title="BParser AVX2 vs BParser OLD"
                  )
     
     fig.update_yaxes(title_text="Ratio", dtick=0.1)
@@ -117,6 +118,7 @@ def porovnaniBlockSize(categories, title):
         marker_color='black'
     ))
 
+    fig.update_xaxes(title_text="Category")
     fig.update_yaxes(title_text="Ratio", dtick=0.1)
     #fig.show()
     fig.write_image(results_path + f"figure_block_size_{title}.pdf", engine="kaleido")
@@ -131,11 +133,11 @@ def porovnani_simd_size(data_med):
     
     bparser_novec_cat = getCategory(bparser_novec, category_sep_indexes)
     
-    fig = go.Figure(layout_title_text="Compare SIMD size")
+    fig = go.Figure(layout_title_text="")
     fig.add_trace(go.Bar(
         x=["Arithmetic", "Boolean", "Function", "Composed"],
         y=[1, 1, 1, 1],
-        name='1',
+        name='no vectorization',
         marker_color='red'
     ))
     
@@ -151,9 +153,10 @@ def porovnani_simd_size(data_med):
         fig.add_trace(go.Bar(
             x=["Arithmetic", "Boolean", "Function", "Composed"],
             y=[ratio_sse_to_novec_cat1, ratio_sse_to_novec_cat2, ratio_sse_to_novec_cat3, ratio_sse_to_novec_cat4],
-            name='2',
+            name='SSE',
             marker_color='yellow'
         ))
+        fig.update_layout(title="\"Starý počítač\", various instruction sets")
         
     if max_simd_size > 2:
         bparser_avx = grouped.get_group("BParser AVX2")
@@ -166,9 +169,10 @@ def porovnani_simd_size(data_med):
         fig.add_trace(go.Bar(
             x=["Arithmetic", "Boolean", "Function", "Composed"],
             y=[ratio_avx_to_novec_cat1, ratio_avx_to_novec_cat2, ratio_avx_to_novec_cat3, ratio_avx_to_novec_cat4],
-            name='4',
+            name='AVX2',
             marker_color='blue'
         ))
+        fig.update_layout(title="\"Nový notebook\", various instruction sets")
 
     if max_simd_size > 4:
         bparser_avx512 = grouped.get_group("BParser AVX512")
@@ -182,10 +186,12 @@ def porovnani_simd_size(data_med):
         fig.add_trace(go.Bar(
             x=["Arithmetic", "Boolean", "Function", "Composed"],
             y=[ratio_avx512_to_novec_cat1, ratio_avx512_to_novec_cat2, ratio_avx512_to_novec_cat3, ratio_avx512_to_novec_cat4],
-            name='8',
+            name='AVX512',
             marker_color='green'
         ))
+        fig.update_layout(title="\"Cluster Charon\", various instruction sets")
     
+    fig.update_xaxes(title_text="Category")
     fig.update_yaxes(title_text="Ratio", dtick=0.1)
     #fig.show()
     fig.write_image(results_path + "figure_simd_size.pdf", engine="kaleido")
@@ -214,32 +220,22 @@ def porovnani_cpp_vs_bp_type(data_cat, bparser_type):
     cat4_ratio = pd.DataFrame(data_med_cat4_cpp_and_bp_type).groupby(['Expression']).apply(ratio)
     cat4_ratio_median = cat4_ratio.median()
     
-    colour = ""
-    match bparser_type:
-        case "AVX512":
-            colour = "green"
-        case "AVX2":
-            colour = "blue"
-        case "SSE":
-            colour = "yellow"
-        case _:
-            colour = "red"
-    
-    fig = go.Figure(layout_title_text=f"BParser {bparser_type} vs C++")
+    fig = go.Figure(layout_title_text=f"C++ vs BParser {bparser_type}")
     # porovnání kategorii
-    fig.add_trace(go.Bar(
-        x=["Arithmetic", "Boolean", "Function", "Composed"],
-        y=[1, 1, 1, 1],
-        name='C++',
-        marker_color='magenta'
-    ))
     fig.add_trace(go.Bar(
         x=["Arithmetic", "Boolean", "Function", "Composed"],
         y=[cat1_ratio_median, cat2_ratio_median, cat3_ratio_median, cat4_ratio_median],
         name=f"BParser {bparser_type}",
-        marker_color=colour
+        marker_color='green'
+    ))
+    fig.add_trace(go.Bar(
+        x=["Arithmetic", "Boolean", "Function", "Composed"],
+        y=[1, 1, 1, 1],
+        name='C++',
+        marker_color='blue'
     ))
     
+    fig.update_xaxes(title_text="Category")
     fig.update_yaxes(title_text="Ratio", dtick=0.1)
     #fig.show()
     fig.write_image(results_path + f"figure_cpp_vs_{bparser_type}.pdf", engine="kaleido")
@@ -254,9 +250,12 @@ def porovnani_cpp_vs_bp_type(data_cat, bparser_type):
 
 
 
+
+
 if __name__ == "__main__":
 
     # changable variables
+    
     # final_path = "old100k_sse2/"
     # run_tests_switch = False
     # max_simd_size = 2
@@ -278,8 +277,8 @@ if __name__ == "__main__":
     # index (ID) of categories (inclusive)
     category_sep_indexes = [6, 15, 38, 999] # => 0-5, 6-14, 15-37, 36-end(44)
 
-    # base_path = "/home/vic/Documents/"
-    base_path = "/Users/vic/Documents/TUL/"
+    base_path = "/home/vic/Documents/"
+    # base_path = "/Users/vic/Documents/TUL/"
     current_path = base_path + "bparser/"
     if max_simd_size > 2:
         old_path = base_path + "bparser_preVCL/"
@@ -373,52 +372,52 @@ if __name__ == "__main__":
         case 8:
             df_bparser_avx512 = grouped.get_group("BParser AVX512")
             df_bparser_avx512_cat = getCategory(df_bparser_avx512, category_sep_indexes)
-            porovnaniBlockSize(df_bparser_avx512_cat, "AVX512")
+            porovnaniBlockSize(df_bparser_avx512_cat, "BParser AVX512")
             
             df_bparser_avx = grouped.get_group("BParser AVX2")
             df_bparser_avx_cat = getCategory(df_bparser_avx, category_sep_indexes)
-            porovnaniBlockSize(df_bparser_avx_cat, "AVX2")
+            porovnaniBlockSize(df_bparser_avx_cat, "BParser AVX2")
             
             df_bparser_sse = grouped.get_group("BParser SSE")
             df_bparser_sse_cat = getCategory(df_bparser_sse, category_sep_indexes)
-            porovnaniBlockSize(df_bparser_sse_cat, "SSE")
+            porovnaniBlockSize(df_bparser_sse_cat, "BParser SSE")
             
             df_bparser_novec = grouped.get_group("BParser no vectorization")
             df_bparser_novec_cat = getCategory(df_bparser_novec, category_sep_indexes)
-            porovnaniBlockSize(df_bparser_novec_cat, "No Vectorization")
+            porovnaniBlockSize(df_bparser_novec_cat, "BParser No Vectorization")
             
             porovnani_cpp_vs_bp_type(data_med_cat, "AVX512")
             
         case 4:
             df_bparser_avx = grouped.get_group("BParser AVX2")
             df_bparser_avx_cat = getCategory(df_bparser_avx, category_sep_indexes)
-            porovnaniBlockSize(df_bparser_avx_cat, "AVX2")
+            porovnaniBlockSize(df_bparser_avx_cat, "BParser AVX2")
             
             df_bparser_sse = grouped.get_group("BParser SSE")
             df_bparser_sse_cat = getCategory(df_bparser_sse, category_sep_indexes)
-            porovnaniBlockSize(df_bparser_sse_cat, "SSE")
+            porovnaniBlockSize(df_bparser_sse_cat, "BParser SSE")
             
             df_bparser_novec = grouped.get_group("BParser no vectorization")
             df_bparser_novec_cat = getCategory(df_bparser_novec, category_sep_indexes)
-            porovnaniBlockSize(df_bparser_novec_cat, "No Vectorization")
+            porovnaniBlockSize(df_bparser_novec_cat, "BParser No Vectorization")
             
             porovnani_cpp_vs_bp_type(data_med_cat, "AVX2")
             
         case 2:
             df_bparser_sse = grouped.get_group("BParser SSE")
             df_bparser_sse_cat = getCategory(df_bparser_sse, category_sep_indexes)
-            porovnaniBlockSize(df_bparser_sse_cat, "SSE")
+            porovnaniBlockSize(df_bparser_sse_cat, "BParser SSE")
             
             df_bparser_novec = grouped.get_group("BParser no vectorization")
             df_bparser_novec_cat = getCategory(df_bparser_novec, category_sep_indexes)
-            porovnaniBlockSize(df_bparser_novec_cat, "No Vectorization")
+            porovnaniBlockSize(df_bparser_novec_cat, "BParser No Vectorization")
             
             porovnani_cpp_vs_bp_type(data_med_cat, "SSE")
             
         case _:
             df_bparser_novec = grouped.get_group("BParser no vectorization")
             df_bparser_novec_cat = getCategory(df_bparser_novec, category_sep_indexes)
-            porovnaniBlockSize(df_bparser_novec_cat, "No Vectorization")
+            porovnaniBlockSize(df_bparser_novec_cat, "BParser No Vectorization")
             
             porovnani_cpp_vs_bp_type(data_med_cat, "no vectorization")    
 

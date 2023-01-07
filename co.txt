@@ -1,5 +1,5 @@
-OLD vs NEW ... dodělat test po tech prumernych kategoriich
-graf pro funkce hyperbolicke a nejake, videt rozdil, co je kde spatne
+graf... SSE vs BPARSER old... ntb???
+graf nebo tabulka.. časy rychlostí hyperbolic vs non hyperbolic, CPP vs BParser all variants?
 
 pip install pandas
 pip install plotly
@@ -13,14 +13,14 @@ barvy:
     BParser SSE                 :   yellow
     BParser AVX2                :   blue
     BParser AVX512              :   green
-    C++                         :   magenta
+    C++                         :   blue
 
     block 64                    :   lightgray
     block 256                   :   gray
     block 1024                  :   black
     
-ghat_old reveaed by push: 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
+    ghat_old reveaed by push: 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
 
-šéma link https://www.diagrameditor.com/
 
 omezeni selectu a maskovani bool, ze se prdpocitava vsechno i to co se nepouzije... ale je to na urovni processoru, ale byla by potreba viceurovnove vyhodnocovani a jeste by se to muselo udelat na urovni simd bolku, a pokud komplet T/F, tak by to jednu vetev vypoctu mohlo zahodit a nepocitat...
+
