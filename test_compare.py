@@ -69,7 +69,7 @@ def porovnani_old_vs_avx2(data_cat):
                  hover_data=["Ratio"],
                  labels={"Time": "Ratio", "Expression": "Expression", "Executor": "Procesor"},
                  # customize axis label
-                 color_discrete_sequence=["blue", "lime"],
+                 color_discrete_sequence=["lime", "blue"],
                  barmode='group',
                  title="BParser OLD vs BParser AVX2"
                  )
