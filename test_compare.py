@@ -1,5 +1,6 @@
 import csv
 import string
+from statistics import mean 
 
 import subprocess
 import os
@@ -29,18 +30,18 @@ def porovnani_old_vs_avx2(data_cat):
     # add ratio 1 to old
     data_med_cat1_old_and_avx['Ratio'] = [cat1_ratio.values[x] if x < cat1_ratio.values.size else 1 for x in
                                           range(cat1_ratio.values.size * 2)]
-    cat1_ratio_median = cat1_ratio.median()
+    cat1_ratio_median = cat1_ratio.mean()
     data_med_cat2_old_and_avx = data_cat[1].loc[data_cat[1]["Executor"].isin(["BParser AVX2", "BParser_OLD"])]
     cat2_ratio = pd.DataFrame(data_med_cat2_old_and_avx).groupby(['Expression']).apply(ratio)
-    cat2_ratio_median = cat2_ratio.median()
+    cat2_ratio_median = cat2_ratio.mean()
     data_med_cat3_old_and_avx = data_cat[2].loc[data_cat[2]["Executor"].isin(["BParser AVX2", "BParser_OLD"])]
     cat3_ratio = pd.DataFrame(data_med_cat3_old_and_avx).groupby(['Expression']).apply(ratio)
-    cat3_ratio_median = cat3_ratio.median()
+    cat3_ratio_median = cat3_ratio.mean()
     data_med_cat4_old_and_avx = data_cat[3].loc[data_cat[3]["Executor"].isin(["BParser AVX2", "BParser_OLD"])]
     cat4_ratio = pd.DataFrame(data_med_cat4_old_and_avx).groupby(['Expression']).apply(ratio)
-    cat4_ratio_median = cat4_ratio.median()
+    cat4_ratio_median = cat4_ratio.mean()
     
-    fig = go.Figure(layout_title_text="BParser AVX2 vs BParser OLD")
+    fig = go.Figure(layout_title_text="BParser OLD vs BParser AVX2")
     # porovnání kategorii
     fig.add_trace(go.Bar(
         x=["Arithmetic", "Boolean", "Function", "Composed"],
@@ -73,6 +74,13 @@ def porovnani_old_vs_avx2(data_cat):
                  title="BParser OLD vs BParser AVX2"
                  )
     
+    newnames = {'BParser_OLD':'BParser OLD', 'BParser AVX2': 'BParser AVX2'}
+    fig.for_each_trace(lambda t: t.update(name = newnames[t.name],
+                                      legendgroup = newnames[t.name],
+                                      hovertemplate = t.hovertemplate.replace(t.name, newnames[t.name])
+                                     )
+                  )
+
     fig.update_yaxes(title_text="Ratio", dtick=0.1)
     #fig.show()
     fig.write_image(results_path + "figure_old_vs_avx_first_cat.pdf", engine="kaleido")
@@ -93,10 +101,10 @@ def getCategory(dataFrame, category_sep_indexes):
 
 
 def porovnaniBlockSize(categories, title):
-    novec_cat1_med = categories[0].groupby("BlockSize").median()
-    novec_cat2_med = categories[1].groupby("BlockSize").median()
-    novec_cat3_med = categories[2].groupby("BlockSize").median()
-    novec_cat4_med = categories[3].groupby("BlockSize").median()
+    novec_cat1_med = categories[0].groupby("BlockSize").mean()
+    novec_cat2_med = categories[1].groupby("BlockSize").mean()
+    novec_cat3_med = categories[2].groupby("BlockSize").mean()
+    novec_cat4_med = categories[3].groupby("BlockSize").mean()
     fig = go.Figure(layout_title_text=title)
     # porovnání kategorii
     fig.add_trace(go.Bar(
@@ -135,6 +143,11 @@ def porovnani_simd_size(data_med):
     
     bparser_novec_cat = getCategory(bparser_novec, category_sep_indexes)
     
+    bparser_novec_cat0 = bparser_novec_cat[0]["Time"].mean()
+    bparser_novec_cat1 = bparser_novec_cat[1]["Time"].mean()
+    bparser_novec_cat2 = bparser_novec_cat[2]["Time"].mean()
+    bparser_novec_cat3 = bparser_novec_cat[3]["Time"].mean()
+    
     fig = go.Figure(layout_title_text="")
     fig.add_trace(go.Bar(
         x=["Arithmetic", "Boolean", "Function", "Composed"],
@@ -147,10 +160,21 @@ def porovnani_simd_size(data_med):
         bparser_sse = grouped.get_group("BParser SSE")
         
         bparser_sse_cat = getCategory(bparser_sse, category_sep_indexes)
-        ratio_sse_to_novec_cat1 = np.average(bparser_sse_cat[0]["Time"].values / bparser_novec_cat[0]["Time"].values)
-        ratio_sse_to_novec_cat2 = np.average(bparser_sse_cat[1]["Time"].values / bparser_novec_cat[1]["Time"].values)
-        ratio_sse_to_novec_cat3 = np.average(bparser_sse_cat[2]["Time"].values / bparser_novec_cat[2]["Time"].values)
-        ratio_sse_to_novec_cat4 = np.average(bparser_sse_cat[3]["Time"].values / bparser_novec_cat[3]["Time"].values)
+        
+        bparser_sse_cat0 = bparser_sse_cat[0]["Time"].mean()
+        bparser_sse_cat1 = bparser_sse_cat[1]["Time"].mean()
+        bparser_sse_cat2 = bparser_sse_cat[2]["Time"].mean()
+        bparser_sse_cat3 = bparser_sse_cat[3]["Time"].mean()
+        
+        ratio_sse_to_novec_cat1 = bparser_sse_cat0 / bparser_novec_cat0
+        ratio_sse_to_novec_cat2 = bparser_sse_cat1 / bparser_novec_cat1
+        ratio_sse_to_novec_cat3 = bparser_sse_cat2 / bparser_novec_cat2
+        ratio_sse_to_novec_cat4 = bparser_sse_cat3 / bparser_novec_cat3
+        
+        # ratio_sse_to_novec_cat1 = np.average(bparser_sse_cat[0]["Time"].values / bparser_novec_cat[0]["Time"].values)
+        # ratio_sse_to_novec_cat2 = np.average(bparser_sse_cat[1]["Time"].values / bparser_novec_cat[1]["Time"].values)
+        # ratio_sse_to_novec_cat3 = np.average(bparser_sse_cat[2]["Time"].values / bparser_novec_cat[2]["Time"].values)
+        # ratio_sse_to_novec_cat4 = np.average(bparser_sse_cat[3]["Time"].values / bparser_novec_cat[3]["Time"].values)
         
         fig.add_trace(go.Bar(
             x=["Arithmetic", "Boolean", "Function", "Composed"],
@@ -164,10 +188,22 @@ def porovnani_simd_size(data_med):
         bparser_avx = grouped.get_group("BParser AVX2")
 
         bparser_avx_cat = getCategory(bparser_avx, category_sep_indexes)
-        ratio_avx_to_novec_cat1 = np.average(bparser_avx_cat[0]["Time"].values / bparser_novec_cat[0]["Time"].values)
-        ratio_avx_to_novec_cat2 = np.average(bparser_avx_cat[1]["Time"].values / bparser_novec_cat[1]["Time"].values)
-        ratio_avx_to_novec_cat3 = np.average(bparser_avx_cat[2]["Time"].values / bparser_novec_cat[2]["Time"].values)
-        ratio_avx_to_novec_cat4 = np.average(bparser_avx_cat[3]["Time"].values / bparser_novec_cat[3]["Time"].values)
+        
+        bparser_avx_cat0 = bparser_avx_cat[0]["Time"].mean()
+        bparser_avx_cat1 = bparser_avx_cat[1]["Time"].mean()
+        bparser_avx_cat2 = bparser_avx_cat[2]["Time"].mean()
+        bparser_avx_cat3 = bparser_avx_cat[3]["Time"].mean()
+        
+        ratio_avx_to_novec_cat1 = bparser_avx_cat0 / bparser_novec_cat0
+        ratio_avx_to_novec_cat2 = bparser_avx_cat1 / bparser_novec_cat1
+        ratio_avx_to_novec_cat3 = bparser_avx_cat2 / bparser_novec_cat2
+        ratio_avx_to_novec_cat4 = bparser_avx_cat3 / bparser_novec_cat3
+        
+        # ratio_avx_to_novec_cat1 = np.average(bparser_avx_cat[0]["Time"].values / bparser_novec_cat[0]["Time"].values)
+        # ratio_avx_to_novec_cat2 = np.average(bparser_avx_cat[1]["Time"].values / bparser_novec_cat[1]["Time"].values)
+        # ratio_avx_to_novec_cat3 = np.average(bparser_avx_cat[2]["Time"].values / bparser_novec_cat[2]["Time"].values)
+        # ratio_avx_to_novec_cat4 = np.average(bparser_avx_cat[3]["Time"].values / bparser_novec_cat[3]["Time"].values)
+        
         fig.add_trace(go.Bar(
             x=["Arithmetic", "Boolean", "Function", "Composed"],
             y=[ratio_avx_to_novec_cat1, ratio_avx_to_novec_cat2, ratio_avx_to_novec_cat3, ratio_avx_to_novec_cat4],
@@ -180,10 +216,21 @@ def porovnani_simd_size(data_med):
         bparser_avx512 = grouped.get_group("BParser AVX512")
         
         bparser_avx512_cat = getCategory(bparser_avx512, category_sep_indexes)
-        ratio_avx512_to_novec_cat1 = np.average(bparser_avx512_cat[0]["Time"].values / bparser_novec_cat[0]["Time"].values)
-        ratio_avx512_to_novec_cat2 = np.average(bparser_avx512_cat[1]["Time"].values / bparser_novec_cat[1]["Time"].values)
-        ratio_avx512_to_novec_cat3 = np.average(bparser_avx512_cat[2]["Time"].values / bparser_novec_cat[2]["Time"].values)
-        ratio_avx512_to_novec_cat4 = np.average(bparser_avx512_cat[3]["Time"].values / bparser_novec_cat[3]["Time"].values)
+        
+        bparser_avx512_cat0 = bparser_avx512_cat[0]["Time"].mean()
+        bparser_avx512_cat1 = bparser_avx512_cat[1]["Time"].mean()
+        bparser_avx512_cat2 = bparser_avx512_cat[2]["Time"].mean()
+        bparser_avx512_cat3 = bparser_avx512_cat[3]["Time"].mean()
+        
+        ratio_avx512_to_novec_cat1 = bparser_avx512_cat0 / bparser_novec_cat0
+        ratio_avx512_to_novec_cat2 = bparser_avx512_cat1 / bparser_novec_cat1
+        ratio_avx512_to_novec_cat3 = bparser_avx512_cat2 / bparser_novec_cat2
+        ratio_avx512_to_novec_cat4 = bparser_avx512_cat3 / bparser_novec_cat3
+        
+        # ratio_avx512_to_novec_cat1 = np.average(bparser_avx512_cat[0]["Time"].values / bparser_novec_cat[0]["Time"].values)
+        # ratio_avx512_to_novec_cat2 = np.average(bparser_avx512_cat[1]["Time"].values / bparser_novec_cat[1]["Time"].values)
+        # ratio_avx512_to_novec_cat3 = np.average(bparser_avx512_cat[2]["Time"].values / bparser_novec_cat[2]["Time"].values)
+        # ratio_avx512_to_novec_cat4 = np.average(bparser_avx512_cat[3]["Time"].values / bparser_novec_cat[3]["Time"].values)
 
         fig.add_trace(go.Bar(
             x=["Arithmetic", "Boolean", "Function", "Composed"],
@@ -211,16 +258,16 @@ def porovnani_cpp_vs_bp_type(data_cat, bparser_type):
     # add ratio 1 to cpp
     data_med_cat1_cpp_and_bp_type['Ratio'] = [cat1_ratio.values[x] if x < cat1_ratio.values.size else 1 for x in
                                           range(cat1_ratio.values.size * 2)]
-    cat1_ratio_median = cat1_ratio.median()
+    cat1_ratio_median = cat1_ratio.mean()
     data_med_cat2_cpp_and_bp_type = data_cat[1].loc[data_cat[1]["Executor"].isin([f"BParser {bparser_type}", "C++"])]
     cat2_ratio = pd.DataFrame(data_med_cat2_cpp_and_bp_type).groupby(['Expression']).apply(ratio)
-    cat2_ratio_median = cat2_ratio.median()
+    cat2_ratio_median = cat2_ratio.mean()
     data_med_cat3_cpp_and_bp_type = data_cat[2].loc[data_cat[2]["Executor"].isin([f"BParser {bparser_type}", "C++"])]
     cat3_ratio = pd.DataFrame(data_med_cat3_cpp_and_bp_type).groupby(['Expression']).apply(ratio)
-    cat3_ratio_median = cat3_ratio.median()
+    cat3_ratio_median = cat3_ratio.mean()
     data_med_cat4_cpp_and_bp_type = data_cat[3].loc[data_cat[3]["Executor"].isin([f"BParser {bparser_type}", "C++"])]
     cat4_ratio = pd.DataFrame(data_med_cat4_cpp_and_bp_type).groupby(['Expression']).apply(ratio)
-    cat4_ratio_median = cat4_ratio.median()
+    cat4_ratio_median = cat4_ratio.mean()
     
     
     colour = ""
