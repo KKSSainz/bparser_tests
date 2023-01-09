@@ -2,9 +2,9 @@ graf... SSE vs BPARSER old... ntb???
 graf nebo tabulka.. časy rychlostí hyperbolic vs non hyperbolic, CPP vs BParser all variants?
 
 
-DEMENT: opravit poradi sloupcu..asi done
 
-zminit strukturu Parser ve zmenach kodu
+jak necislovat abstrakt a podekovani????
+VELKY NADPIS ma cislo stranky UPROSTRED???
 
 vyresit odkaz do prilohy A
 
